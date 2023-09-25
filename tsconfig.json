@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    // "paths": {
+    //   "@api/*": ["api/*"],
+    //   "@components/*": ["components/*"],
+    //   "@utils/*": ["utils/*"],
+    //   "@flux/*": ["flux/*"],
+    //   "@pages/*": ["pages/*"],
+    //   // Add more aliases for your project directories as needed
+    // },
     "target": "es5",
     "lib": [
       "dom",
