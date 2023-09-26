@@ -8,7 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "./index.css";
 
-
 const queryClient = new QueryClient();
 // @ts-ignore
 const appRoot = ReactDOM.createRoot(document.getElementById("root"));
@@ -18,7 +17,7 @@ appRoot.render(
     <PersistGate persistor={persister}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <App />
+            <App />
         </QueryClientProvider>
       </BrowserRouter>
     </PersistGate>

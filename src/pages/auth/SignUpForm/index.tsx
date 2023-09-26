@@ -1,26 +1,19 @@
-import React, { useState } from "react";
 import { register } from "api/auth";
-import { Button, DatePicker, Space, Select } from "antd";
+import { Button, DatePicker, Select, Form, Input } from "antd";
+import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 function Signup() {
-  const [signupData, setSignupData] = useState({
-    name: {
-      first: "",
-      last: "",
-    },
-    dob: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "Male",
-  });
-  const handleSignup = async (event: any) => {
-    event.preventDefault();
+  const [form] = Form.useForm();
+
+  const handleSignup = async (values: any) => {
     try {
-      const { confirmPassword, ...registrationData } = signupData;
-      const { data } = await register(registrationData);
+      const { data } = await register({
+        dob: moment(values.dob).format("DD/MM/YYYY"),
+        ...values,
+      });
       toast.success(data.message, {
         autoClose: 3000,
       });
@@ -28,137 +21,125 @@ function Signup() {
       console.log("Error | Sign-Up", error);
     }
   };
+
+  const onFinish = (values: any) => {
+    console.log("Received values:", values);
+    handleSignup(values); // You can pass the form values to your handleSignup function
+  };
+
   return (
-    <div className="position-relative">
-      <div
-        id="radius-shape-1"
-        className="position-absolute rounded-circle shadow-5-strong"
-      ></div>
-      <div
-        id="radius-shape-2"
-        className="position-absolute shadow-5-strong"
-      ></div>
-      <form
-        className="auth-form  px-4 py-5 px-md-5  bg-glass"
-        onSubmit={handleSignup}
+    <>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        className="auth-form px-4 py-5 px-md-5 bg-glass"
         style={{
           borderRadius: "0.35rem",
         }}
       >
         <h3 className="mb-4 display-5 fw-bold ls-tight">
-          {" "}
           Signup <br /> Information
         </h3>
         <div className="d-grid signup-inner">
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <input
-                className="bg-transparent form-control py-2"
-                type="text"
-                placeholder="First Name"
-                value={signupData.name.first}
-                onChange={(e) =>
-                  setSignupData({
-                    ...signupData,
-                    name: { ...signupData.name, first: e.target.value },
-                  })
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <input
-                className="bg-transparent form-control py-2"
-                type="text"
-                placeholder="Last Name"
-                value={signupData.name.last}
-                onChange={(e) =>
-                  setSignupData({
-                    ...signupData,
-                    name: { ...signupData.name, last: e.target.value },
-                  })
-                }
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <input
-                className="bg-transparent form-control py-2"
-                type="email"
-                placeholder="Enter Email"
-                value={signupData.email}
-                onChange={(e) =>
-                  setSignupData({ ...signupData, email: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <DatePicker
-                onChange={(date, dateString) =>
-                  setSignupData({ ...signupData, dob: dateString })
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <input
-                className="bg-transparent form-control py-2"
-                type="password"
-                placeholder="Enter Password"
-                value={signupData.password}
-                onChange={(e) =>
-                  setSignupData({ ...signupData, password: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <input
-                className="bg-transparent form-control py-2"
-                type="password"
-                placeholder="Confirm Password"
-                value={signupData.confirmPassword}
-                onChange={(e) =>
-                  setSignupData({
-                    ...signupData,
-                    confirmPassword: e.target.value,
-                  })
-                }
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-outline mb-2 w-100">
-              <Select
-                defaultValue="lucy"
-                style={{ width: 120 }}
-                onChange={(value: any) =>
-                  setSignupData({ ...signupData, gender: value })
-                }
-                options={[
-                  { value: "male", label: "Male" },
-                  { value: "female", label: "Female" },
-                  { value: "custom", label: "Custom" },
-                ]}
-              />
-            </div>
-          </div>
+          <Form.Item
+            name={["name", "first"]}
+            rules={[
+              { required: true, message: "Please enter your First Name" },
+            ]}
+          >
+            <Input
+              className="bg-transparent form-control py-2"
+              placeholder="First Name"
+            />
+          </Form.Item>
+          <Form.Item
+            name={["name", "last"]}
+            rules={[{ required: true, message: "Please enter your Last Name" }]}
+          >
+            <Input
+              className="bg-transparent form-control py-2"
+              placeholder="Last Name"
+            />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                type: "email",
+                message: "Please enter a valid email address",
+              },
+              { required: true, message: "Please enter your email" },
+            ]}
+          >
+            <Input
+              className="bg-transparent form-control py-2"
+              placeholder="Enter Email"
+            />
+          </Form.Item>
+          <Form.Item name="dob">
+            <DatePicker className="bg-transparent form-control py-2" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              { required: true, message: "Please enter your password" },
+              {
+                min: 3,
+                message: "Password must be at least 6 characters",
+              },
+            ]}
+          >
+            <Input
+              type="password"
+              className="bg-transparent form-control py-2"
+              placeholder="Enter Password"
+            />
+          </Form.Item>
+          <Form.Item
+            name="confirmPassword"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              { required: true, message: "Please confirm your password" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The two passwords do not match")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input
+              type="password"
+              className="bg-transparent form-control py-2"
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+          <Form.Item name="gender" initialValue="male">
+            <Select
+              defaultValue="male"
+              style={{ width: 120 }}
+              options={[
+                { value: "male", label: "Male" },
+                { value: "female", label: "Female" },
+                { value: "custom", label: "Custom" },
+              ]}
+            />
+          </Form.Item>
         </div>
         <Button
-          onSubmit={handleSignup}
+          type="primary"
+          htmlType="submit"
           className="btn btn-primary py-2 w-50 mx-auto"
         >
           Sign Up
         </Button>
-      </form>
-    </div>
+      </Form>
+    </>
   );
 }
 

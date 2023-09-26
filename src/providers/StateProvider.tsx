@@ -7,3 +7,4 @@ function StateProvider({ children }: PropsWithChildren) {
 }
 
 export default StateProvider;
+

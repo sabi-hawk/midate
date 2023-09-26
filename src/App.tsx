@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import UnderProgress from "./components/UnderProgress";
 import Navbar from "./components/LeftNavbar";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Authentication from "./pages/auth";
 import { AtomState } from "./flux/store";
 import { Row, Col } from "antd";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const user = useSelector((state: AtomState) => state?.auth?.user);
@@ -70,8 +70,7 @@ const App = () => {
           </Col>
           <Col span={4}>Ads</Col>
         </Row>
-
-        <ToastContainer />
+        <ToastContainer position="top-center" />
       </>
     );
   }
@@ -87,7 +86,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer position="top-center"/>
     </>
   );
 };
