@@ -7,6 +7,7 @@ import { AtomState } from "./flux/store";
 import { Row, Col } from "antd";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "scss/index.scss";
 
 const App = () => {
   const user = useSelector((state: AtomState) => state?.auth?.user);
@@ -14,7 +15,7 @@ const App = () => {
   if (user) {
     return (
       <>
-        <Row gutter={[16, 16]}>
+        <Row className="row-container" gutter={[16, 16]}>
           <Col span={5}>
             <Navbar />
           </Col>
@@ -86,7 +87,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-      <ToastContainer position="top-center"/>
+      <ToastContainer position="top-center" />
     </>
   );
 };
