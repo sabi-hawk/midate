@@ -16,10 +16,10 @@ const App = () => {
     return (
       <>
         <Row className="row-container" gutter={[16, 16]}>
-          <Col span={5}>
+          <Col className="col-navbar" span={4}>
             <Navbar />
           </Col>
-          <Col span={15}>
+          <Col span={16}>
             <Routes>
               <Route
                 path="/"
