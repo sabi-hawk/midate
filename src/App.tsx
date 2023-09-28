@@ -6,8 +6,10 @@ import Authentication from "./pages/auth";
 import { AtomState } from "./flux/store";
 import { Row, Col } from "antd";
 import { ToastContainer } from "react-toastify";
+import adsImage from "assets/ads.png";
 import "react-toastify/dist/ReactToastify.css";
 import "scss/index.scss";
+import Home from "pages/home";
 
 const App = () => {
   const user = useSelector((state: AtomState) => state?.auth?.user);
@@ -23,53 +25,47 @@ const App = () => {
             <Routes>
               <Route
                 path="/"
-                element={
-                  user ? <Navigate to="dashboard" /> : <Navigate to="auth" />
-                }
+                element={user ? <Navigate to="home" /> : <Navigate to="auth" />}
               />
               <Route
-                path="/dashboard"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                path="/home"
+                element={user ? <Home /> : <Navigate to="../auth" />}
               />
               <Route
                 path="/auth"
-                element={
-                  user ? <Navigate to="../dashboard" /> : <Authentication />
-                }
+                element={user ? <Navigate to="../home" /> : <Authentication />}
               />
               <Route
-                path="/mail-templates"
+                path="/stories"
                 element={user ? <UnderProgress /> : <Navigate to="../auth" />}
               />
               <Route
-                path="/about"
+                path="/messages"
                 element={user ? <UnderProgress /> : <Navigate to="../auth" />}
               />
               <Route
-                path="/demo"
+                path="/notifications"
                 element={user ? <UnderProgress /> : <Navigate to="../auth" />}
               />
               <Route
-                path="/chat"
+                path="/profile"
                 element={user ? <UnderProgress /> : <Navigate to="../auth" />}
               />
               <Route
-                path="/logs"
-                element={user ? <UnderProgress /> : <Navigate to="../logs" />}
+                path="/settings"
+                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
               />
               <Route
                 path="*"
                 element={
-                  user ? (
-                    <Navigate to="../dashboard" />
-                  ) : (
-                    <Navigate to="../auth" />
-                  )
+                  user ? <Navigate to="../home" /> : <Navigate to="../auth" />
                 }
               />
             </Routes>
           </Col>
-          <Col span={4}>Ads</Col>
+          <Col className="ads-col" span={4}>
+            <img src={adsImage} alt="" />
+          </Col>
         </Row>
         <ToastContainer position="top-center" />
       </>

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./index.scss";
 
 function LeftNavbar() {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("Home");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -41,7 +41,7 @@ function LeftNavbar() {
     },
     {
       label: (
-        <NavLink className="home-menu-item" to="chat">
+        <NavLink className="home-menu-item" to="messages">
           <i className="menu-icon icon-messages" />
           Messages
         </NavLink>
