@@ -1,4 +1,4 @@
-import { Button, Menu, MenuProps } from "antd";
+import { Menu, MenuProps } from "antd";
 import { setUser } from "flux/reducers/auth";
 import { setChatsData } from "flux/reducers/chat";
 import React, { useState } from "react";
@@ -6,8 +6,12 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
+import { useAppState } from "hooks";
 
 function LeftNavbar() {
+  const {
+    auth: { user },
+  } = useAppState();
   const [selected, setSelected] = useState("Home");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -98,7 +102,13 @@ function LeftNavbar() {
           items={MenuItems}
         />
       </div>
-      <div className="bottom-container">Profile</div>
+      <div className="bottom-container">
+        <img
+          src="http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f7.png"
+          alt=""
+        />
+        <p>{`${user.name.first} ${user.name.last}`}</p>
+      </div>
     </div>
   );
 }

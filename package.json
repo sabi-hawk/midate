@@ -14,6 +14,7 @@
     "@types/react-dom": "^18.2.7",
     "ant-design": "^1.0.0",
     "antd": "^5.9.3",
+    "antd-mask-input": "^2.0.7",
     "axios": "^1.5.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",

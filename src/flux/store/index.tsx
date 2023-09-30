@@ -35,5 +35,5 @@ import {
   
   export default store;
   export const persister = persistStore(store);
-  export type AtomState = ReturnType<typeof store.getState>;
+  export type AppState = ReturnType<typeof store.getState>;
   

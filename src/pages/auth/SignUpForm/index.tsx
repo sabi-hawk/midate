@@ -1,9 +1,10 @@
 import { register } from "api/auth";
-import { Button, DatePicker, Select, Form, Input } from "antd";
+import { Button, DatePicker, Select, Form, Input, Col, Row } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import NumInput from "components/NumInput";
+import { MaskedInput } from "antd-mask-input";
 
 function Signup() {
   const [form] = Form.useForm();
@@ -37,107 +38,163 @@ function Signup() {
           borderRadius: "0.35rem",
         }}
       >
-        <h3 className="mb-4 display-5 fw-bold ls-tight">
-          Signup <br /> Information
-        </h3>
-        <div className="d-grid signup-inner">
-          <Form.Item
-            name={["name", "first"]}
-            rules={[
-              { required: true, message: "Please enter your First Name" },
-            ]}
-          >
-            <Input
-              className="bg-transparent form-control py-2"
-              placeholder="First Name"
-            />
-          </Form.Item>
-          <Form.Item
-            name={["name", "last"]}
-            rules={[{ required: true, message: "Please enter your Last Name" }]}
-          >
-            <Input
-              className="bg-transparent form-control py-2"
-              placeholder="Last Name"
-            />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            rules={[
-              {
-                type: "email",
-                message: "Please enter a valid email address",
-              },
-              { required: true, message: "Please enter your email" },
-            ]}
-          >
-            <Input
-              className="bg-transparent form-control py-2"
-              placeholder="Enter Email"
-            />
-          </Form.Item>
-          <Form.Item name="dob">
-            <DatePicker className="bg-transparent form-control py-2" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[
-              { required: true, message: "Please enter your password" },
-              {
-                min: 3,
-                message: "Password must be at least 6 characters",
-              },
-            ]}
-          >
-            <Input
-              type="password"
-              className="bg-transparent form-control py-2"
-              placeholder="Enter Password"
-            />
-          </Form.Item>
-          <Form.Item
-            name="confirmPassword"
-            dependencies={["password"]}
-            hasFeedback
-            rules={[
-              { required: true, message: "Please confirm your password" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error("The two passwords do not match")
-                  );
-                },
-              }),
-            ]}
-          >
-            <Input
-              type="password"
-              className="bg-transparent form-control py-2"
-              placeholder="Confirm Password"
-            />
-          </Form.Item>
-          <Form.Item name="gender" initialValue="male">
-            <Select
-              defaultValue="male"
-              style={{ width: 120 }}
-              options={[
-                { value: "male", label: "Male" },
-                { value: "female", label: "Female" },
-                { value: "custom", label: "Custom" },
-              ]}
-            />
-          </Form.Item>
+        <div className="wrapper-logo">
+          <i className="app-logo"></i>
+          <h2> MiDate</h2>
         </div>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="btn btn-primary py-2 w-50 mx-auto"
-        >
-          Sign Up
-        </Button>
+        <Row className="wrapper-fields">
+          <Col className="inner-first-col" span={12}>
+            <div>
+              <label className="bold">First Name</label>
+              <Form.Item
+                name={["name", "first"]}
+                rules={[
+                  { required: true, message: "Please enter your First Name" },
+                ]}
+              >
+                <Input
+                  className="bg-transparent form-control py-2"
+                  placeholder="First Name"
+                />
+              </Form.Item>
+            </div>
+            <div>
+              <label className="bold">Email Address</label>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address",
+                  },
+                  { required: true, message: "Please enter your email" },
+                ]}
+              >
+                <Input
+                  className="bg-transparent form-control py-2"
+                  placeholder="Enter Email"
+                />
+              </Form.Item>
+            </div>
+            <div>
+              <label className="bold">I am a</label>
+              <Form.Item name="gender" initialValue="male">
+                <Select
+                  defaultValue="male"
+                  options={[
+                    { value: "male", label: "Male" },
+                    { value: "female", label: "Female" },
+                    { value: "custom", label: "Custom" },
+                  ]}
+                />
+              </Form.Item>
+            </div>
+            <div>
+              <label className="bold">Password</label>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                  {
+                    min: 3,
+                    message: "Password must be at least 6 characters",
+                  },
+                ]}
+              >
+                <Input
+                  type="password"
+                  className="bg-transparent form-control py-2"
+                  placeholder="Enter Password"
+                />
+              </Form.Item>
+            </div>
+          </Col>
+          <Col className="inner-second-col" span={12}>
+            <div>
+              <label className="bold">Last Name</label>
+              <Form.Item
+                name={["name", "last"]}
+                rules={[
+                  { required: true, message: "Please enter your Last Name" },
+                ]}
+              >
+                <Input
+                  className="bg-transparent form-control py-2"
+                  placeholder="Last Name"
+                />
+              </Form.Item>
+            </div>
+
+            <div>
+              <label className="bold">Your Birthday</label>
+              <Form.Item name="dob">
+                <DatePicker className="bg-transparent form-control py-2" />
+              </Form.Item>
+            </div>
+
+            <div>
+              <label className="bold">Phone</label>
+              <Form.Item
+                validateTrigger="onSubmit"
+                rules={[
+                  {
+                    required: true,
+                    message: "Phone number is required",
+                  },
+                  {
+                    pattern:
+                      /^(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?)|[0-9]?)\s*[)]?[-\s.]?[(]?[0-9]{1,3}[)]?([-\s.]?[0-9]{3})([-\s.]?[0-9]{3,4})$/,
+                    message: "Phone number format is not valid",
+                  },
+                ]}
+              >
+                <MaskedInput
+                  id="phone_num_input"
+                  mask="+{1} (000)-000-0000"
+                  placeholder="+1 (XXX)-XXX-XXXX"
+                  autoFocus
+                />
+              </Form.Item>
+            </div>
+
+            <div>
+              <label className="bold">Confirm Password</label>
+              <Form.Item
+                name="confirmPassword"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please confirm your password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("The two passwords do not match")
+                      );
+                    },
+                  }),
+                ]}
+              >
+                <Input
+                  type="password"
+                  className="bg-transparent form-control py-2"
+                  placeholder="Confirm Password"
+                />
+              </Form.Item>
+            </div>
+          </Col>
+        </Row>
+        <div className="btn-signUp-wrapper">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="btn btn-primary py-2 w-50 mx-auto"
+          >
+            Sign Up
+          </Button>
+        </div>
       </Form>
     </>
   );

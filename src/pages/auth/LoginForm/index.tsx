@@ -37,38 +37,47 @@ function Login() {
           borderRadius: "0.35rem",
         }}
       >
-        <h3 className="mb-4 display-5 fw-bold ls-tight">Login Information</h3>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please enter your email",
-            },
-          ]}
-        >
-          <Input
-            type="email"
-            placeholder="Enter Email"
-            className="bg-transparent form-control py-2"
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please enter your password",
-            },
-          ]}
-        >
-          <Input.Password
-            placeholder="Enter Password"
-            className="bg-transparent form-control py-2"
-          />
-        </Form.Item>
+        <div className="wrapper-logo">
+          <i className="app-logo"></i>
+          <h2> MiDate</h2>
+        </div>
+        <div>
+          <label className="bold">Username or email</label>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please enter your email",
+              },
+            ]}
+          >
+            <Input
+              type="email"
+              placeholder="Enter Email"
+              className="bg-transparent form-control py-2"
+            />
+          </Form.Item>
+        </div>
+        <div>
+          <label className="bold">Password</label>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please enter your password",
+              },
+            ]}
+          >
+            <Input.Password
+              placeholder="Enter Password"
+              className="bg-transparent form-control py-2"
+            />
+          </Form.Item>
+        </div>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="w-100">
+          <Button className="login-btn" type="primary" htmlType="submit">
             Login In
           </Button>
         </Form.Item>

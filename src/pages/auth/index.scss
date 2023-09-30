@@ -1,0 +1,164 @@
+.login-wrapper {
+  background-color: #eff5ff;
+  width: 100%;
+  .first-col {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 80%;
+      width: 80%;
+    }
+  }
+  .second-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    form {
+      width: 50%;
+      .login-btn {
+        width: 100%;
+        background-color: #25c78b;
+        box-shadow: none;
+        border-color: white;
+        font-weight: 400;
+        font-size: 18px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wrapper-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 33px;
+        gap: 12px;
+
+        h2 {
+          font-size: 32px;
+        }
+      }
+
+      .app-logo {
+        content: url(../../assets/trademark.png);
+      }
+
+      .bold {
+        font-weight: 500;
+      }
+    }
+    .login-footer-text {
+      font-weight: 500;
+      button {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        color: #25c78b;
+        font-weight: bold;
+        padding: 6px 4px;
+      }
+    }
+  }
+}
+
+.singUp-wrapper {
+  background-color: #eff5ff;
+  width: 100%;
+  .first-col {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 80%;
+      width: 80%;
+    }
+  }
+  .second-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    form {
+      width: 70%;
+
+      .ant-picker {
+        width: 100%;
+      }
+      .inner-first-col {
+        padding-right: 10px;
+      }
+      .inner-second-col {
+        padding-left: 10px;
+      }
+      .login-btn {
+        width: 100%;
+        background-color: #25c78b;
+        box-shadow: none;
+        border-color: white;
+        font-weight: 400;
+        font-size: 18px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wrapper-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 33px;
+        gap: 12px;
+
+        h2 {
+          font-size: 32px;
+        }
+      }
+
+      .app-logo {
+        content: url(../../assets/trademark.png);
+      }
+
+      .bold {
+        font-weight: 500;
+      }
+
+      .btn-signUp-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        button {
+          width: 30%;
+          background-color: #25c78b;
+          box-shadow: none;
+          border-color: white;
+          font-weight: 400;
+          font-size: 18px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+    .singUp-footer-text {
+      font-weight: 500;
+      button {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        color: #25c78b;
+        font-weight: bold;
+        padding: 6px 4px;
+      }
+    }
+  }
+}

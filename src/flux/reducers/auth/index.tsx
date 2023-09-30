@@ -28,7 +28,7 @@ const auth = createSlice({
   reducers: {
     setUser: (state = initialState, action) => {
       if (Object.keys(action.payload).length !== 0) {
-        return { ...state, user: action.payload };
+        return { ...state, ...action.payload };
       }
       return action.payload;
     },

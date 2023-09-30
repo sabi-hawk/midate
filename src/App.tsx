@@ -1,18 +1,21 @@
-import { useSelector } from "react-redux";
 import UnderProgress from "./components/UnderProgress";
 import Navbar from "./components/LeftNavbar";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Authentication from "./pages/auth";
-import { AtomState } from "./flux/store";
 import { Row, Col } from "antd";
 import { ToastContainer } from "react-toastify";
 import adsImage from "assets/ads.png";
 import "react-toastify/dist/ReactToastify.css";
 import "scss/index.scss";
 import Home from "pages/home";
+import LandingPage from "pages/landing";
+import LoginPage from "pages/auth/Login";
+import SignUpPage from "pages/auth/Signup";
+import { useAppState } from "hooks";
 
 const App = () => {
-  const user = useSelector((state: AtomState) => state?.auth?.user);
+  const {
+    auth: { user },
+  } = useAppState();
 
   if (user) {
     return (
@@ -21,44 +24,47 @@ const App = () => {
           <Col className="col-navbar" span={4}>
             <Navbar />
           </Col>
-          <Col span={16}>
+          <Col className="middle-col" span={16}>
             <Routes>
               <Route
                 path="/"
-                element={user ? <Navigate to="home" /> : <Navigate to="auth" />}
+                element={
+                  user ? <Navigate to="home" /> : <Navigate to="login" />
+                }
               />
+              {/* <Route path="/" element={<LandingPage />} /> */}
               <Route
                 path="/home"
                 element={user ? <Home /> : <Navigate to="../auth" />}
               />
               <Route
-                path="/auth"
-                element={user ? <Navigate to="../home" /> : <Authentication />}
+                path="/login"
+                element={user ? <Navigate to="../home" /> : <LoginPage />}
               />
               <Route
                 path="/stories"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                element={user ? <UnderProgress /> : <Navigate to="../login" />}
               />
               <Route
                 path="/messages"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                element={user ? <UnderProgress /> : <Navigate to="../login" />}
               />
               <Route
                 path="/notifications"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                element={user ? <UnderProgress /> : <Navigate to="../login" />}
               />
               <Route
                 path="/profile"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                element={user ? <UnderProgress /> : <Navigate to="../login" />}
               />
               <Route
                 path="/settings"
-                element={user ? <UnderProgress /> : <Navigate to="../auth" />}
+                element={user ? <UnderProgress /> : <Navigate to="../login" />}
               />
               <Route
                 path="*"
                 element={
-                  user ? <Navigate to="../home" /> : <Navigate to="../auth" />
+                  user ? <Navigate to="../home" /> : <Navigate to="../login" />
                 }
               />
             </Routes>
@@ -74,15 +80,14 @@ const App = () => {
 
   return (
     <>
-      <div className="main d-flex">
-        <div className="right-panel w-100">
-          <Routes>
-            <Route path="/" element={<Navigate to="/auth" replace />} />
-            <Route path="/auth" element={<Authentication />} />
-            <Route path="*" element={<Navigate to="../auth" />} />
-          </Routes>
-        </div>
-      </div>
+      <Row className="un-auth-wrapper">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="*" element={<Navigate to="../" />} />
+        </Routes>
+      </Row>
       <ToastContainer position="top-center" />
     </>
   );

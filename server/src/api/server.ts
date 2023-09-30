@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import apiRouter from './routes';
 import helmet from "helmet";
+import path from 'path';
 
 require('dotenv').config();
 
@@ -21,6 +22,8 @@ app.use((req, res, next) => {
   console.log(`Received a ${req.method} request at ${req.url}`);
   next();
 });
+
+app.use("/images", express.static(path.join(__dirname, '../../uploads')))
 
 mongoose
 // @ts-ignore
