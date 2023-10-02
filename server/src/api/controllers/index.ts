@@ -15,7 +15,7 @@ const Logger = winston.createLogger({
   ],
 });
 
-console.log("PATH IS:", path.join(__dirname, '..', '..', "..", 'logs', 'index.txt'))
+// console.log("PATH IS:", path.join(__dirname, '..', '..', "..", 'logs', 'index.txt'))
 type HttpMethod = (req: Request, res: Response) => Promise<any>;
 
 export function httpMethod(method: HttpMethod): HttpMethod {

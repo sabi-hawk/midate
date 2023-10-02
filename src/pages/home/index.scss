@@ -7,12 +7,11 @@
 }
 
 .col-1-home {
-
   form {
     padding: 22px !important;
     background-color: white;
     border: 1px solid white;
-    border-radius: 24px;
+    border-radius: 14px;
   }
   .ant-row {
     display: flex;
@@ -49,4 +48,92 @@
 
 .col-2-home {
   background-color: lightblue;
+}
+
+.row-user-cards {
+  flex-direction: row !important;
+  .user-card {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    border-radius: 14px;
+    margin-top: 10px;
+
+    .image-wrapper {
+      width: 35%;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 14px;
+      }
+    }
+    .details-wrapper {
+      width: 65%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .age-wrapper {
+        display: flex;
+        align-items: center;
+
+        p {
+          padding-right: 4px;
+          margin: 0;
+          font-weight: 500;
+        }
+      }
+      .city-p {
+        margin: 0;
+      }
+      .gender-preference-wrap {
+        display: flex;
+
+        .text-looking {
+          padding-right: 6px;
+          font-size: 12px;
+        }
+        .gender-p {
+          background-color: #25c78b;
+          color: white;
+          border-radius: 12px;
+          padding: 0px 7px;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      h3 {
+        padding: 0px 17px;
+        margin: 5px 0px;
+      }
+      p {
+        margin: 5px 0px;
+        padding: 0px 17px;
+      }
+      .btn-wrapper {
+        padding: 5px 17px 8px 17px;
+        display: flex;
+        gap: 10px;
+
+        button {
+          border-radius: 20px;
+          padding: 0px 29px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+      }
+    }
+    .female-age-icon {
+      content: url(../../assets/age_female.png);
+    }
+    .close-fill {
+      content: url(../../assets/close-fill.png);
+    }
+    .heart-fill {
+      content: url(../../assets/heart-fill.png);
+    }
+  }
 }

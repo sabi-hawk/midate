@@ -4,15 +4,23 @@ import mongoose from 'mongoose';
 import apiRouter from './routes';
 import helmet from "helmet";
 import path from 'path';
+import { Server } from "socket.io";
+import dotenv from "dotenv";
 
-require('dotenv').config();
+dotenv.config()
+// require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 8001;
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+
+const corsOptions = {
+  origin: ['http://example.com', 'http://localhost:3000'],
+};
+
+app.use(cors(corsOptions));
 app.disable('x-powered-by');
 app.use("/api", apiRouter);
 
@@ -26,7 +34,7 @@ app.use((req, res, next) => {
 app.use("/images", express.static(path.join(__dirname, '../../uploads')))
 
 mongoose
-// @ts-ignore
+  // @ts-ignore
   .connect(process.env.MONGO_DB_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -42,6 +50,24 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Midate API' });
 });
 
-app.listen(port, () => {
+
+// Create HTTP server
+const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+
+// Initialize Socket.IO
+const io = new Server(server);
+
+io.on("connection", async (socket) => {
+  console.log(`Socket ${socket.id} connected`);
+
+  socket.on("test", () => {
+    console.log("Test Emit is Working Fine")
+  })
+  socket.on("disconnect", () => {
+    console.log(`Socket ${socket.id} disconnected`);
+  });
+
 });
