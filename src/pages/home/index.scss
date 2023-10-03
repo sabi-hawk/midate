@@ -1,12 +1,14 @@
 .wrapper-home-page {
+  row-gap: 5px !important;
   .title-home {
     padding: 12px 32px;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 500;
   }
 }
 
 .col-1-home {
+  padding: 0px 20px 0px 32px;
   form {
     padding: 22px !important;
     background-color: white;
@@ -47,10 +49,65 @@
 }
 
 .col-2-home {
-  background-color: lightblue;
+  padding-right: 12px;
+
+  .heading {
+    margin-bottom: 16px;
+  }
+  .ant-row {
+    background-color: white;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px 22px 16px;
+
+    h2 {
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 22px;
+    }
+    .user-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+
+      .wrapper-user-details {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        .ant-avatar {
+          width: 45px !important;
+          height: 45px !important;
+        }
+
+        h4 {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+
+      button {
+        background-color: #25c78b;
+        border-color: #25c78b;
+        color: white;
+        font-weight: 400;
+        font-size: 15px;
+        padding: 4px 20px;
+        border-radius: 17px;
+      }
+    }
+  }
 }
 
 .row-user-cards {
+  padding-top: 18px;
   flex-direction: row !important;
   .user-card {
     display: flex;
@@ -134,6 +191,46 @@
     }
     .heart-fill {
       content: url(../../assets/heart-fill.png);
+    }
+  }
+}
+
+.row-1 {
+  form {
+    padding: 22px !important;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 14px;
+  }
+  .ant-row {
+    display: flex;
+    flex-direction: column;
+    .ant-form {
+      display: flex;
+      padding: 5px 32px;
+      gap: 15px;
+      .ant-form-item {
+        width: 90%;
+      }
+
+      .search-icon {
+        content: url(../../assets/search.png);
+        width: 28px;
+        height: 28px;
+      }
+
+      .ant-select-selector {
+        height: 35px;
+        border-radius: 12px;
+        background-color: #eaeaea;
+      }
+      button {
+        background-color: #25c78b;
+        display: flex;
+        align-items: center;
+        height: 35px;
+        border-radius: 12px;
+      }
     }
   }
 }

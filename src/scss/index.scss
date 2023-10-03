@@ -9,6 +9,8 @@
   padding: 14px;
 }
 .col-navbar {
+  flex: 0 0 15% !important;
+  max-width: 15% !important;
   box-shadow: 0px 0px 16px rgb(0 0 0 / 19%);
 }
 
@@ -17,7 +19,8 @@
   box-shadow: 5px 0px 10px 0px rgba(0, 0, 0, 0.1019607843) inset;
   padding: 10px 0px; /* Add padding to the parent column */
   position: relative; /* Make the position relative for child positioning */
-
+  flex: 0 0 15% !important;
+  max-width: 15% !important;
   /* Center the child div vertically and horizontally */
   display: flex;
   flex-direction: column;
@@ -34,14 +37,15 @@
   width: 100%; /* Make the child div 100% width of the parent */
   height: 100%; /* Make the child div 100% height of the parent */
   background-color: gray; /* Set the background color of the vertical div */
-  text-align: center; 
+  text-align: center;
 }
 
 .un-auth-wrapper {
   height: 100%;
-  
 }
 
 .middle-col {
   background-color: #f1f1f1;
+  flex: 0 0 70% !important;
+  max-width: 70% !important;
 }

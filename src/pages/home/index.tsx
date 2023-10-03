@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "antd";
+import { Avatar, Button, Col, Form, Row } from "antd";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
 import "./index.scss";
@@ -79,76 +79,124 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log("CHECK ENV", process.env.REACT_APP_SOCKET_URL)
-    socket.emit("test")
-  })
+    console.log("CHECK ENV", process.env.REACT_APP_SOCKET_URL);
+    socket.emit("test");
+  });
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
-      <Col className="col-1-home" span={18}>
-        <Row>
-          <div className="title-home">Discover People</div>
-          <Form form={form} onFinish={onFinish}>
-            <Form.Item name="searchString">
-              <Select
-                className="input-search"
-                showSearch
-                value={value}
-                placeholder="Search People"
-                defaultActiveFirstOption={false}
-                suffixIcon={null}
-                filterOption={false}
-                onSearch={handleSearch}
-                onChange={handleChange}
-                notFoundContent={null}
-                options={(data || []).map((d) => ({
-                  value: d.value,
-                  label: d.text,
-                }))}
-              />
-            </Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="btn btn-primary py-2 w-50 mx-auto"
-            >
-              <i className="search-icon"></i>
-            </Button>
-          </Form>
-        </Row>
-        <Row className="row-user-cards" gutter={[16, 16]}>
-          {users.map((user, index) => (
-            <Col span={12} key={index}>
-              <div className="user-card">
-                <div className="image-wrapper">
-                  <img src={user.profilePic} alt="" />
+      <Row>
+        <div className="title-home">Discover People</div>
+      </Row>
+      <Row>
+        <Col className="col-1-home" span={17}>
+          <Row>
+            <Form form={form} onFinish={onFinish}>
+              <Form.Item name="searchString">
+                <Select
+                  className="input-search"
+                  showSearch
+                  value={value}
+                  placeholder="Search People"
+                  defaultActiveFirstOption={false}
+                  suffixIcon={null}
+                  filterOption={false}
+                  onSearch={handleSearch}
+                  onChange={handleChange}
+                  notFoundContent={null}
+                  options={(data || []).map((d) => ({
+                    value: d.value,
+                    label: d.text,
+                  }))}
+                />
+              </Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="btn btn-primary py-2 w-50 mx-auto"
+              >
+                <i className="search-icon"></i>
+              </Button>
+            </Form>
+          </Row>
+          <Row className="row-user-cards" gutter={[16, 16]}>
+            {users.map((user, index) => (
+              <Col span={12} key={index}>
+                <div className="user-card">
+                  <div className="image-wrapper">
+                    <img src={user.profilePic} alt="" />
+                  </div>
+                  <div className="details-wrapper">
+                    <h3>{user.name}</h3>
+                    <div className="age-wrapper">
+                      <p>{user.age}</p>
+                      <i className="female-age-icon"></i>
+                    </div>
+                    <p className="city-p">{user.city}</p>
+                    <div className="gender-preference-wrap">
+                      <p className="text-looking">LookingFor </p>
+                      <p className="gender-p">{user.lookingFor}</p>
+                    </div>
+                    <div className="btn-wrapper">
+                      <Button>
+                        <i className="close-fill"></i>
+                        No
+                      </Button>
+                      <Button>
+                        <i className="heart-fill"></i>YES
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                <div className="details-wrapper">
-                  <h3>{user.name}</h3>
-                  <div className="age-wrapper">
-                    <p>{user.age}</p>
-                    <i className="female-age-icon"></i>
-                  </div>
-                  <p className="city-p">{user.city}</p>
-                  <div className="gender-preference-wrap">
-                    <p className="text-looking">LookingFor </p>
-                    <p className="gender-p">{user.lookingFor}</p>
-                  </div>
-                  <div className="btn-wrapper">
-                    <Button>
-                      <i className="close-fill"></i>
-                      No
-                    </Button>
-                    <Button>
-                      <i className="heart-fill"></i>YES
-                    </Button>
-                  </div>
+              </Col>
+            ))}
+          </Row>
+        </Col>
+        <Col className="col-2-home" span={7}>
+          <Row>
+            <div className="heading">
+              <h2>Online Friends</h2>
+            </div>
+            <div className="user-card">
+              <div className="wrapper-user-details">
+                <Avatar
+                  src={
+                    <img
+                      src={
+                        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f7.png"
+                      }
+                      alt="avatar"
+                    />
+                  }
+                />
+                <div>
+                  <h4> Monroe Parker</h4>
+                  <p>SuperModel</p>
                 </div>
               </div>
-            </Col>
-          ))}
-        </Row>
-      </Col>
-      <Col className="col-2-home" span={6}></Col>
+              <Button>Chat</Button>
+            </div>
+            <div className="user-card">
+              <div className="wrapper-user-details">
+                <Avatar
+                  src={
+                    <img
+                      src={
+                        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f7.png"
+                      }
+                      alt="avatar"
+                    />
+                  }
+                />
+                <div>
+                  <h4> Monroe Parker</h4>
+                  <p>SuperModel</p>
+                </div>
+              </div>
+              <Button>Chat</Button>
+            </div>
+          </Row>
+        </Col>
+      </Row>
     </Row>
   );
 }
