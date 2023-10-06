@@ -9,7 +9,26 @@
 }
 
 .col-1-home {
-  padding: 0px 20px 0px 32px;
+  padding: 10px 20px 10px 32px;
+  &.user-profile {
+    padding: 10px 20px 10px 32px;
+    max-height: 100vh;
+    overflow-y: auto;
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    // Hide scrollbar for Chrome, Safari, and Opera
+    &::-webkit-scrollbar {
+      width: 0.4em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+
   form {
     padding: 22px !important;
     background-color: white;
@@ -49,6 +68,10 @@
   }
 
   .user-header {
+    background-color: white;
+    border-radius: 14px;
+    padding: 15px 27px;
+
     display: flex;
     flex-direction: row !important;
     justify-content: space-between;
@@ -154,6 +177,9 @@
   }
 
   .wrapper-pics {
+    margin-left: -8px;
+    margin-right: -8px;
+    padding: 10px 0px;
     flex-direction: row !important;
 
     .wrap-pic {
@@ -170,6 +196,15 @@
   }
 
   .wrapper-stories {
+    .wrapper-story {
+      background-color: white;
+      border-radius: 14px;
+      padding: 18px 27px;
+      button {
+        border: none;
+        background: transparent;
+      }
+    }
     .row-header {
       display: flex;
       justify-content: space-between;
@@ -193,6 +228,28 @@
             margin: 4px 0px;
             font-size: 12px;
           }
+        }
+      }
+    }
+
+    .row-story-content {
+      font-size: 17px;
+      color: #6b6b6b;
+    }
+    .row-footer {
+      display: flex;
+      justify-content: space-between;
+
+      .wrap-btn {
+        gap: 5px;
+        display: flex;
+
+        p {
+          margin: 0px 0px 0px 3px;
+        }
+
+        button {
+          display: flex;
         }
       }
     }

@@ -26,8 +26,8 @@ function Profile() {
   ];
   return (
     <Row>
-      <Col className="col-1-home" span={17}>
-        <Row className="user-header">
+      <Col className="col-1-home user-profile" span={17}>
+        <Row gutter={[16, 18]} className="user-header">
           <div className="details-wrap">
             <h2> Jeccica J. Profile</h2>
             <p className="tag-line">- So be careful, Grumpy Lina</p>
@@ -65,7 +65,7 @@ function Profile() {
             </Col>
           ))}
         </Row>
-        <Row className="wrapper-stories">
+        <Row gutter={[16, 18]} className="wrapper-stories">
           {stories.map((story) => (
             <div className="wrapper-story">
               <div className="row-header">
@@ -96,9 +96,11 @@ function Profile() {
                 <div className="wrap-btn">
                   <Button>
                     <i className="icon-thumb-up"></i>
+                    <p>230</p>
                   </Button>
                   <Button>
                     <i className="icon-comment"></i>
+                    <p>50</p>
                   </Button>
                 </div>
                 <Button>
