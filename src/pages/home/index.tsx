@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Col, Form, Row } from "antd";
+import { Button, Col, Form, Row } from "antd";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-import "./index.scss";
 import { socket } from "index";
 import Profile from "components/Profile";
-import OnlineFiends from "components/OnlineFriends";
+import SideBarFiends from "components/OnlineFriends";
+import "./index.scss";
 
 function Home() {
   const [data, setData] = useState<SelectProps["options"]>([]);
@@ -170,9 +170,8 @@ function Home() {
                 ))}
               </Row>
             </Col>
-            <Col className="col-2-home" span={7}>
-              <OnlineFiends />
-            </Col>
+
+            <SideBarFiends />
           </Row>
         </>
       ) : (

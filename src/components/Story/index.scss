@@ -1,0 +1,70 @@
+.wrapper-story {
+  background-color: white;
+  border-radius: 14px;
+  padding: 18px 27px;
+  button {
+    border: none;
+    background: transparent;
+  }
+
+  .row-header {
+    display: flex;
+    justify-content: space-between;
+    .wrapper-details {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+
+      .ant-avatar {
+        height: 45px !important;
+        width: 45px !important;
+      }
+
+      .details {
+        .user-name {
+          margin: 4px 0px;
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .time-posted {
+          margin: 4px 0px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .row-story-content {
+    font-size: 17px;
+    color: #6b6b6b;
+  }
+  .row-footer {
+    display: flex;
+    justify-content: space-between;
+
+    .wrap-btn {
+      gap: 5px;
+      display: flex;
+
+      p {
+        margin: 0px 0px 0px 3px;
+      }
+
+      button {
+        display: flex;
+      }
+    }
+  }
+  .icon-three-dots {
+    content: url(../../assets/three-dots.png);
+  }
+  .icon-thumb-up {
+    content: url(../../assets/thumb.png);
+  }
+  .icon-comment {
+    content: url(../../assets/comment.png);
+  }
+  .icon-share {
+    content: url(../../assets/share.png);
+  }
+}

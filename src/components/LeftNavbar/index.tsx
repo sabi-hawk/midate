@@ -1,17 +1,19 @@
 import { Menu, MenuProps } from "antd";
 import { setUser } from "flux/reducers/auth";
 import { setChatsData } from "flux/reducers/chat";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./index.scss";
 import { useAppState } from "hooks";
+import { useLocation } from "react-router-dom";
 
 function LeftNavbar() {
   const {
     auth: { user },
   } = useAppState();
+  const location = useLocation();
   const [selected, setSelected] = useState("Home");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,6 +26,14 @@ function LeftNavbar() {
   const onMenuClick: MenuProps["onClick"] = (e) => {
     setSelected(e.key);
   };
+  useEffect(() => {
+    // Get the pathname from the URL
+    const pathname = location.pathname;
+
+    // Capitalize the first letter and assign it to selected
+    setSelected(pathname.charAt(1).toUpperCase() + pathname.slice(2));
+  }, [location.pathname]);
+
   const MenuItems: MenuProps["items"] = [
     {
       label: (

@@ -1,0 +1,87 @@
+.col-1-stories {
+  padding: 10px 20px 10px 32px;
+
+  form {
+    padding: 22px !important;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 14px;
+  }
+  .ant-row {
+    display: flex;
+    flex-direction: column;
+    .ant-form {
+      display: flex;
+      padding: 5px 32px;
+      gap: 15px;
+      .ant-form-item {
+        width: 90%;
+      }
+
+      .send-icon {
+        content: url(../../assets/send.png);
+        width: 28px;
+        height: 28px;
+      }
+
+      .ant-select-selector {
+        height: 42px;
+        border-radius: 12px;
+        background-color: #eaeaea;
+
+        .ant-select-selection-placeholder {
+          color: black;
+          font-size: 16px;
+        }
+      }
+      button {
+        background-color: #25c78b;
+        display: flex;
+        align-items: center;
+        height: 42px;
+        border-radius: 17px;
+      }
+    }
+  }
+
+ 
+}
+
+.row-wrapper-stories {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  .ant-row {
+    &.wrapper-stories {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  .row-wrap-feed {
+    .title-feed {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .wrapper-stories {
+    max-height: 73vh;
+    overflow-y: auto;
+    flex-direction: row !important;
+
+    // Hide scrollbar for Firefox
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    // Hide scrollbar for Chrome, Safari, and Opera
+    &::-webkit-scrollbar {
+      width: 0.4em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+}

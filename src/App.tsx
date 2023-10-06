@@ -11,6 +11,9 @@ import LandingPage from "pages/landing";
 import LoginPage from "pages/auth/Login";
 import SignUpPage from "pages/auth/Signup";
 import { useAppState } from "hooks";
+import Stories from "pages/stories";
+import Notifications from "pages/notifications";
+import Messages from "pages/messages";
 
 const App = () => {
   const {
@@ -43,15 +46,15 @@ const App = () => {
               />
               <Route
                 path="/stories"
-                element={user ? <UnderProgress /> : <Navigate to="../login" />}
+                element={user ? <Stories /> : <Navigate to="../login" />}
               />
               <Route
                 path="/messages"
-                element={user ? <UnderProgress /> : <Navigate to="../login" />}
+                element={user ? <Messages /> : <Navigate to="../login" />}
               />
               <Route
                 path="/notifications"
-                element={user ? <UnderProgress /> : <Navigate to="../login" />}
+                element={user ? <Notifications /> : <Navigate to="../login" />}
               />
               <Route
                 path="/profile"

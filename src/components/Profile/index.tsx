@@ -1,14 +1,15 @@
-import { Avatar, Button, Col, Row } from "antd";
-import OnlineFiends from "components/OnlineFriends";
+import { Button, Col, Row } from "antd";
+import SideBarFiends from "components/OnlineFriends";
+import Story from "components/Story";
 
 function Profile() {
   const images = [
     "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f1.png",
     "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f2.png",
-    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f1.png",
-    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f2.png",
-    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f1.png",
-    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f2.png",
+    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f3.png",
+    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f4.png",
+    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f5.png",
+    "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f6.png",
   ];
   const stories = [
     {
@@ -67,53 +68,12 @@ function Profile() {
         </Row>
         <Row gutter={[16, 18]} className="wrapper-stories">
           {stories.map((story) => (
-            <div className="wrapper-story">
-              <div className="row-header">
-                <div className="wrapper-details">
-                  <Avatar
-                    src={
-                      <img
-                        src={
-                          "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f7.png"
-                        }
-                        alt="avatar"
-                      />
-                    }
-                  />
-                  <div className="details">
-                    <p className="user-name">Jessica J.</p>
-                    <p className="time-posted"> 20 minutes ago</p>
-                  </div>
-                </div>
-                <Button className="btn-three-dot">
-                  <i className="icon-three-dots"></i>
-                </Button>
-              </div>
-              <div className="row-story-content">
-                <p>{story.content}</p>
-              </div>
-              <div className="row-footer">
-                <div className="wrap-btn">
-                  <Button>
-                    <i className="icon-thumb-up"></i>
-                    <p>230</p>
-                  </Button>
-                  <Button>
-                    <i className="icon-comment"></i>
-                    <p>50</p>
-                  </Button>
-                </div>
-                <Button>
-                  <i className="icon-share"></i>
-                </Button>
-              </div>
-            </div>
+            <Story story={story} />
           ))}
         </Row>
       </Col>
-      <Col className="col-2-home user-profile" span={7}>
-        <OnlineFiends />
-      </Col>
+
+      <SideBarFiends />
     </Row>
   );
 }
