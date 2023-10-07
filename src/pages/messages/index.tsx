@@ -4,39 +4,48 @@ import { SearchOutlined } from "@ant-design/icons";
 import "./index.scss";
 
 function Messages() {
-  const notifications = [
+  const users = [
     {
+      _id: "123",
       url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
     },
     {
+      _id: "124",
       url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
     },
     {
+      _id: "125",
       url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
     },
-
     {
+      _id: "126",
       url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
+    },
+    {
+      _id: "127",
+      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
+    },
+    {
+      _id: "128",
+      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
+      name: "Ammi Watts",
+      lastMessage: "Yes, we can meet. What Time?",
+      time: "Today | 05:30 PM",
     },
   ];
 
@@ -51,17 +60,87 @@ function Messages() {
             <h3> All Messages</h3>
 
             <Button>
-              {" "}
               <i className="icon-dots"></i>
             </Button>
           </div>
 
-          <div>
-            <Input addonBefore={<SearchOutlined />} placeholder="large size" />
+          <div className="search-wrap">
+            <Input
+              addonBefore={<SearchOutlined />}
+              placeholder="Search or start a new chat"
+            />
+          </div>
+
+          <div className="user-cards-wrapper">
+            {users.map((user) => (
+              <>
+                <div className="user-card">
+                  <div className="details">
+                    <Avatar src={<img src={user.url} alt="avatar" />} />
+                    <div className="content">
+                      <h3>{user.name}</h3>
+                      <p className="p-tag-message">{user.lastMessage}</p>
+                      <p className="p-tag-time">{user.time}</p>
+                    </div>
+                  </div>
+                  <Button>
+                    <i className="icon-favorite"></i>
+                  </Button>
+                </div>
+                <div className="horizontal-line"></div>
+              </>
+            ))}
           </div>
         </Col>
         <Col className="col-2-messages right-sidebar" span={16}>
-          <Row className="wrapper-messages"></Row>
+          <div className="header">
+            <div className="details">
+              <Avatar
+                src={
+                  <img
+                    src="http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png"
+                    alt="avatar"
+                  />
+                }
+              />
+              <h3>Ammi Watts</h3>
+            </div>
+
+            <Button>
+              <i className="icon-favorite"></i>
+            </Button>
+          </div>
+          <div className="messages-body">
+            <p> Today | 06:32 PM</p>
+            <div className="message-wrap">
+              <p className="message-in">
+                Oh, hello! All perfectly. I will check it and get back to you
+                soon
+              </p>
+              <p className="p-tag-time">04:45 PM</p>
+            </div>
+            <div className="message-wrap">
+              <p className="message-out">Yes, Thank You</p>
+              <p className="p-tag-time">04:45 PM</p>
+            </div>
+            <div className="message-wrap">
+              <p className="message-in">
+                Oh, hello! All perfectly. I will check it and get back to you
+                soon
+              </p>
+              <p className="p-tag-time">04:45 PM</p>
+            </div>
+          </div>
+
+          <div className="footer">
+            <Button>
+              <i className="icon-emoji"></i>
+            </Button>
+            <Input placeholder="Type your message here ..." />
+            <Button>
+              <i className="icon-send"></i>
+            </Button>
+          </div>
         </Col>
       </Row>
     </Row>
