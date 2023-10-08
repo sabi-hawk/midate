@@ -2,7 +2,7 @@ import { Avatar, Button, Row, Col } from "antd";
 import React from "react";
 import "./index.scss";
 
-function OnlineFiends() {
+function OnlineFriends() {
   return (
     <Col className="col-2-home" span={7}>
       <Row>
@@ -52,4 +52,4 @@ function OnlineFiends() {
   );
 }
 
-export default OnlineFiends;
+export default OnlineFriends;

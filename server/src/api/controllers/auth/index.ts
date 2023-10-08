@@ -33,7 +33,7 @@ export const login = httpMethod(async (req, res) => {
     const matchPassword = await bcrypt.compare(reqData.password, existingUser.password)
 
     if (!matchPassword) {
-        res.status(400).json({ message: "Invalid Credentials !" })
+        return res.status(400).json({ message: "Invalid Credentials !" })
     }
 
     const session = await createSession(existingUser)

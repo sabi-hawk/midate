@@ -4,7 +4,7 @@ import { Select } from "antd";
 import type { SelectProps } from "antd";
 import { socket } from "index";
 import Profile from "components/Profile";
-import SideBarFiends from "components/OnlineFriends";
+import SideBarFriends from "components/OnlineFriends";
 import "./index.scss";
 
 function Home() {
@@ -171,7 +171,7 @@ function Home() {
               </Row>
             </Col>
 
-            <SideBarFiends />
+            <SideBarFriends />
           </Row>
         </>
       ) : (

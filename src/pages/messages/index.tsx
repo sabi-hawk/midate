@@ -56,22 +56,24 @@ function Messages() {
       </Row>
       <Row>
         <Col className="col-1-messages left-sidebar" span={8}>
-          <div className="header">
-            <h3> All Messages</h3>
+          <div className="left-header">
+            <div className="header">
+              <h3> All Messages</h3>
 
-            <Button>
-              <i className="icon-dots"></i>
-            </Button>
+              <Button>
+                <i className="icon-dots"></i>
+              </Button>
+            </div>
+
+            <div className="search-wrap">
+              <Input
+                addonBefore={<SearchOutlined />}
+                placeholder="Search or start a new chat"
+              />
+            </div>
           </div>
 
-          <div className="search-wrap">
-            <Input
-              addonBefore={<SearchOutlined />}
-              placeholder="Search or start a new chat"
-            />
-          </div>
-
-          <div className="user-cards-wrapper">
+          <div className="user-cards-wrapper scroll-hide">
             {users.map((user) => (
               <>
                 <div className="user-card">
@@ -110,24 +112,28 @@ function Messages() {
               <i className="icon-favorite"></i>
             </Button>
           </div>
-          <div className="messages-body">
-            <p> Today | 06:32 PM</p>
-            <div className="message-wrap">
-              <p className="message-in">
+          <div className="messages-body scroll-hide">
+            <p className="pass-time-text"> Today | 06:32 PM</p>
+            <div className="message-wrap message-in">
+              <p className="message">
                 Oh, hello! All perfectly. I will check it and get back to you
                 soon
               </p>
               <p className="p-tag-time">04:45 PM</p>
             </div>
-            <div className="message-wrap">
-              <p className="message-out">Yes, Thank You</p>
+            <div className="message-wrap message-out">
+              <p className="message">Yes, Thank You</p>
               <p className="p-tag-time">04:45 PM</p>
             </div>
-            <div className="message-wrap">
-              <p className="message-in">
+            <div className="message-wrap message-in">
+              <p className="message">
                 Oh, hello! All perfectly. I will check it and get back to you
                 soon
               </p>
+              <p className="p-tag-time">04:45 PM</p>
+            </div>
+            <div className="message-wrap message-out">
+              <p className="message">Yes, Thank You</p>
               <p className="p-tag-time">04:45 PM</p>
             </div>
           </div>

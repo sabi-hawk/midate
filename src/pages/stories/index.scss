@@ -67,7 +67,7 @@
   }
 
   .wrapper-stories {
-    max-height: 73vh;
+    max-height: calc(100vh - 248px);
     overflow-y: auto;
     flex-direction: row !important;
 
