@@ -14,6 +14,7 @@ import { useAppState } from "hooks";
 import Stories from "pages/stories";
 import Notifications from "pages/notifications";
 import Messages from "pages/messages";
+import Settings from "pages/settings";
 
 const App = () => {
   const {
@@ -62,7 +63,7 @@ const App = () => {
               />
               <Route
                 path="/settings"
-                element={user ? <UnderProgress /> : <Navigate to="../login" />}
+                element={user ? <Settings /> : <Navigate to="../login" />}
               />
               <Route
                 path="*"

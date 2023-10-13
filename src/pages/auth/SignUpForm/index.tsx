@@ -3,7 +3,6 @@ import { Button, DatePicker, Select, Form, Input, Col, Row } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import NumInput from "components/NumInput";
 import { MaskedInput } from "antd-mask-input";
 
 function Signup() {
