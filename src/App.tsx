@@ -15,6 +15,7 @@ import Stories from "pages/stories";
 import Notifications from "pages/notifications";
 import Messages from "pages/messages";
 import Settings from "pages/settings";
+import Profile from "pages/profile";
 
 const App = () => {
   const {
@@ -59,7 +60,7 @@ const App = () => {
               />
               <Route
                 path="/profile"
-                element={user ? <UnderProgress /> : <Navigate to="../login" />}
+                element={user ? <Profile /> : <Navigate to="../login" />}
               />
               <Route
                 path="/settings"

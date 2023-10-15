@@ -38,34 +38,62 @@
   }
 
   form {
-    width: 50%;
-    .login-btn {
-      width: 100%;
-      background-color: #25c78b;
-      box-shadow: none;
-      border-color: white;
-      font-weight: 400;
-      font-size: 18px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .row-general {
+      background-color: white;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 30px;
 
-    .wrapper-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 33px;
-      gap: 12px;
-
-      h2 {
-        font-size: 32px;
+      .heading-general {
+        width: 100%;
+        padding-left: 8px;
+        padding-right: 8px;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 10px;
       }
     }
 
-    .app-logo {
-      content: url(../../assets/trademark.png);
+    .row-account-settings {
+      background-color: white;
+      padding: 16px;
+      border-radius: 14px;
+
+      .heading-account-settings {
+        width: 100%;
+        padding-left: 8px;
+        padding-right: 8px;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+    }
+
+    .wrapper-form-footer {
+      display: flex;
+      justify-content: end;
+      .wrapper-btn {
+        gap: 10px;
+        display: flex;
+        padding: 30px 0px;
+        .cancel {
+          height: 29px;
+          display: flex;
+          align-items: center;
+          border-radius: 12px;
+          background-color: #d6001c;
+          color: white;
+        }
+        .save {
+          height: 29px;
+          display: flex;
+          align-items: center;
+          border-radius: 12px;
+          background-color: #25c78b;
+          color: white;
+          padding: 4px 20px;
+        }
+      }
     }
 
     .bold {

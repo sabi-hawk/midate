@@ -24,7 +24,8 @@ function Settings() {
               borderRadius: "0.35rem",
             }}
           >
-            <Row className="row-general">
+            <Row gutter={16} className="row-general">
+              <div className="heading-general">General</div>
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Location</label>
@@ -99,7 +100,8 @@ function Settings() {
                 </div>
               </Col>
             </Row>
-            <Row className="row-account-settings">
+            <Row gutter={16} className="row-account-settings">
+              <div className="heading-account-settings">Account Settings</div>
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Email Address</label>
@@ -202,22 +204,15 @@ function Settings() {
             </Row>
 
             <div className="wrapper-form-footer">
-              <div>
-                <Button className="btn btn-primary py-2 w-50 mx-auto">
-                  Cancel
-                </Button>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="btn btn-primary py-2 w-50 mx-auto"
-                >
+              <div className="wrapper-btn">
+                <Button className="cancel">Cancel</Button>
+                <Button type="primary" htmlType="submit" className="save">
                   Save
                 </Button>
               </div>
             </div>
           </Form>
-          <Row className="general-row"></Row>
-          <Row className="account-settings-row"></Row>
+          
         </Col>
       </Row>
     </Row>
