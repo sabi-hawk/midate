@@ -65,9 +65,26 @@ function Profile() {
             </Col>
           </Row>
           <Row className="row-personal-details">
-            <div className="row-first"></div>
+            <div className="row-first">
+              <div className="details">
+                <h3>John Doe</h3>
+                <p>- So be careful, Grumpy Lina</p>
+              </div>
+              <Button>Edit</Button>
+            </div>
             <div className="divider"></div>
-            <div className="row-second"></div>
+            <div className="row-second">
+              <div className="wrapper-fields">
+                <div className="tags">
+                  <p>Birthday:</p>
+                  <p>City:</p>
+                </div>
+                <div className="values">
+                  <p>23.10.2000</p>
+                  <p>New York</p>
+                </div>
+              </div>
+            </div>
           </Row>
           <Row className="row-photos">
             <div className="row-header">
@@ -82,9 +99,11 @@ function Profile() {
           </Row>
           <Row className="row-interests">
             <h3>Interests</h3>
-            {Interests.map((tag) => (
-              <p>{tag}</p>
-            ))}
+            <div className="wrapper-tags">
+              {Interests.map((tag) => (
+                <p>{tag}</p>
+              ))}
+            </div>
           </Row>
         </Col>
       </Row>
