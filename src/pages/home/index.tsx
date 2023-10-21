@@ -6,6 +6,7 @@ import { socket } from "index";
 import Profile from "components/Profile";
 import SideBarFriends from "components/OnlineFriends";
 import "./index.scss";
+import axios from "axios";
 
 function Home() {
   const [data, setData] = useState<SelectProps["options"]>([]);
@@ -90,6 +91,32 @@ function Home() {
   useEffect(() => {
     console.log("CHECK ENV", process.env.REACT_APP_SOCKET_URL);
     socket.emit("test");
+
+    const apiKey = "b11b04855b07409ea54c31a5c94e9af8";
+    const latitude = "32.143873";
+    const longitude = "74.165987";
+    const requestURL = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${latitude}+${longitude}&pretty=1`;
+
+    // Make an HTTP request to the geocoding service
+    axios
+      .get(requestURL)
+      .then((response) => {
+        const data = response.data;
+        if (data.results && data.results.length > 0) {
+          const city = data.results[0].components.city || "City not found";
+          const country =
+            data.results[0].components.country || "Country not found";
+          console.log("City:", city);
+          console.log("Country:", country);
+        } else {
+          console.log(
+            "Location information not found for the provided coordinates."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Geocoding request failed:", error);
+      });
   });
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>

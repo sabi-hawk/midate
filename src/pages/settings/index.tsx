@@ -1,11 +1,26 @@
 import React from "react";
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import { MaskedInput } from "antd-mask-input";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { userSettings } from "api/user";
 import "./index.scss";
 
 function Settings() {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    const { confirmPassword, ...remainingData } = values;
+    try {
+      const { data } = await userSettings(remainingData);
+      toast.success(data?.message, {
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.log("Error Setting Data", error);
+      toast.error("Error Setting Data", {
+        autoClose: 3000,
+      });
+    }
     console.log("Received values:", values);
   };
 
@@ -28,19 +43,38 @@ function Settings() {
               <div className="heading-general">General</div>
               <Col className="col-field" span={12}>
                 <div>
-                  <label className="bold">Location</label>
+                  <label className="bold">Country</label>
                   <Form.Item
-                    name={["name", "first"]}
+                    name={"country"}
                     rules={[
                       {
                         required: true,
-                        message: "Please enter your First Name",
+                        message: "Please enter your Country",
                       },
                     ]}
                   >
                     <Input
                       className="bg-transparent form-control py-2"
-                      placeholder="First Name"
+                      placeholder="Country"
+                    />
+                  </Form.Item>
+                </div>
+              </Col>
+              <Col className="col-field" span={12}>
+                <div>
+                  <label className="bold">City</label>
+                  <Form.Item
+                    name={"city"}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your City",
+                      },
+                    ]}
+                  >
+                    <Input
+                      className="bg-transparent form-control py-2"
+                      placeholder="City"
                     />
                   </Form.Item>
                 </div>
@@ -48,29 +82,20 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Matches</label>
-                  <Form.Item
-                    name="email"
-                    rules={[
-                      {
-                        type: "email",
-                        message: "Please enter a valid email address",
-                      },
-                      { required: true, message: "Please enter your email" },
-                    ]}
-                  >
+                  <Form.Item name="matches">
                     <Select
                       defaultValue="male"
                       options={[
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                        { value: "custom", label: "Custom" },
+                        { value: "Male", label: "Male" },
+                        { value: "Female", label: "Female" },
+                        { value: "Custom", label: "Custom" },
                       ]}
                     />
                   </Form.Item>
                 </div>
               </Col>
 
-              <Col className="col-field" span={12}>
+              {/* <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Filter Radius</label>
                   <Form.Item name="gender" initialValue="male">
@@ -84,7 +109,7 @@ function Settings() {
                     />
                   </Form.Item>
                 </div>
-              </Col>
+              </Col> */}
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Notifications</label>
@@ -92,8 +117,8 @@ function Settings() {
                     <Select
                       defaultValue="male"
                       options={[
-                        { value: "male", label: "On" },
-                        { value: "female", label: "Off" },
+                        { value: "On", label: "On" },
+                        { value: "Off", label: "Off" },
                       ]}
                     />
                   </Form.Item>
@@ -126,6 +151,7 @@ function Settings() {
                 <div>
                   <label className="bold">Phone</label>
                   <Form.Item
+                  name={"phone"}
                     validateTrigger="onSubmit"
                     rules={[
                       {
@@ -141,8 +167,8 @@ function Settings() {
                   >
                     <MaskedInput
                       id="phone_num_input"
-                      mask="+{1} (000)-000-0000"
-                      placeholder="+1 (XXX)-XXX-XXXX"
+                      mask="+{1}(000)-000-0000"
+                      placeholder="+1(XXX)-XXX-XXXX"
                       autoFocus
                     />
                   </Form.Item>
@@ -212,7 +238,6 @@ function Settings() {
               </div>
             </div>
           </Form>
-          
         </Col>
       </Row>
     </Row>

@@ -10,6 +10,16 @@ const AboutSchema = new Schema({
     description: {
         type: String,
     },
+    preferredGender: {
+        type: String,
+        default: 'Female',
+        enum: ['Male', 'Female', 'Custom']
+    },
+    notifications: {
+        type: String,
+        default: 'On',
+        enum: ['On', 'Off']
+    },
     city: {
         type: String,
     },

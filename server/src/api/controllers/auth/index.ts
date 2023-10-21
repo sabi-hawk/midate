@@ -28,18 +28,44 @@ export const login = httpMethod(async (req, res) => {
     const existingUser = await User.findOne({ email: reqData.email });
 
     if (!existingUser) {
-        return res.status(400).json({ message: "User not Found!" })
+        throw {
+            status: 400,
+            message: "User not Found!",
+        };
+
     }
     const matchPassword = await bcrypt.compare(reqData.password, existingUser.password)
 
     if (!matchPassword) {
-        return res.status(400).json({ message: "Invalid Credentials !" })
+        throw {
+            status: 400,
+            message: "Invalid Credentials !",
+        };
     }
 
     const session = await createSession(existingUser)
     res.status(200).json({ user: existingUser, token: session.accessToken, expiresAt: session.expiresAt, message: "Successfully LoggedIn!" })
 })
 
+export const changePassword = httpMethod(async (req, res) => {
+
+    const { email, password } = req.body
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const existingUser = await User.findOneAndUpdate({ email: email }, {
+        $set: {
+            password: hashedPassword
+        },
+    }, { new: true });
+
+    if (!existingUser) {
+        throw {
+            status: 400,
+            message: "User not Found!",
+        };
+    }
+    res.status(200).json({ user: existingUser, message: "Password Changed Successfully!" })
+})
 
 // update the current accessToken's time  again to which its ideally is
 export const refreshToken = httpMethod(async (req: Request, res: Response) => {
