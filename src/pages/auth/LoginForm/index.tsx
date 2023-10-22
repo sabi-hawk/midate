@@ -16,15 +16,21 @@ function Login() {
   };
 
   const handleLogin = async (values: any) => {
-    const { data } = await login(values);
+    const { status, data } = await login(values);
     const { message, ...payload } = data;
 
-    dispatch(setUser(payload));
+    if (status !== 200) {
+      toast.error(message, {
+        autoClose: 3000,
+      });
+    } else {
+      dispatch(setUser(payload));
 
-    navigate("/dashboard");
-    toast.success(message, {
-      autoClose: 3000,
-    });
+      navigate("/dashboard");
+      toast.success(message, {
+        autoClose: 3000,
+      });
+    }
   };
 
   return (

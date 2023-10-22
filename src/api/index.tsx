@@ -9,10 +9,10 @@ const API = axios.create({ baseURL: "http://localhost:8000/api" });
 API.interceptors.request.use(
   (config) => {
     const {
-      auth: { user },
+      auth: { token },
     } = store.getState();
-    if (user?.token && config.headers) {
-      config.headers["auth-token"] = user.token;
+    if (token && config.headers) {
+      config.headers["auth-token"] = token;
     }
 
     return config;

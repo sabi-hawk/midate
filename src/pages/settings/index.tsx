@@ -5,8 +5,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userSettings } from "api/user";
 import "./index.scss";
+import { useAppState } from "hooks";
 
 function Settings() {
+  const {
+    auth: {
+      user: { about, phone, email },
+    },
+  } = useAppState();
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
     const { confirmPassword, ...remainingData } = values;
@@ -46,12 +52,7 @@ function Settings() {
                   <label className="bold">Country</label>
                   <Form.Item
                     name={"country"}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter your Country",
-                      },
-                    ]}
+                    initialValue={about.country || ''}
                   >
                     <Input
                       className="bg-transparent form-control py-2"
@@ -65,12 +66,7 @@ function Settings() {
                   <label className="bold">City</label>
                   <Form.Item
                     name={"city"}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter your City",
-                      },
-                    ]}
+                    initialValue={about.city || ''}
                   >
                     <Input
                       className="bg-transparent form-control py-2"
@@ -82,9 +78,9 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Matches</label>
-                  <Form.Item name="matches">
+                  <Form.Item name="matches" initialValue={about.preferredGender || "Female"}>
                     <Select
-                      defaultValue="male"
+                      defaultValue="Female"
                       options={[
                         { value: "Male", label: "Male" },
                         { value: "Female", label: "Female" },
@@ -113,9 +109,9 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Notifications</label>
-                  <Form.Item name="notifications" initialValue="male">
+                  <Form.Item name="notifications" initialValue={about.notifications || "On"}>
                     <Select
-                      defaultValue="male"
+                      defaultValue="On"
                       options={[
                         { value: "On", label: "On" },
                         { value: "Off", label: "Off" },
@@ -139,6 +135,7 @@ function Settings() {
                       },
                       { required: true, message: "Please enter your email" },
                     ]}
+                    initialValue={email}
                   >
                     <Input
                       className="bg-transparent form-control py-2"
@@ -151,19 +148,16 @@ function Settings() {
                 <div>
                   <label className="bold">Phone</label>
                   <Form.Item
-                  name={"phone"}
+                    name={"phone"}
                     validateTrigger="onSubmit"
                     rules={[
-                      {
-                        required: true,
-                        message: "Phone number is required",
-                      },
                       {
                         pattern:
                           /^(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?)|[0-9]?)\s*[)]?[-\s.]?[(]?[0-9]{1,3}[)]?([-\s.]?[0-9]{3})([-\s.]?[0-9]{3,4})$/,
                         message: "Phone number format is not valid",
                       },
                     ]}
+                    initialValue={phone}
                   >
                     <MaskedInput
                       id="phone_num_input"
@@ -180,17 +174,19 @@ function Settings() {
                   <Form.Item
                     name="password"
                     rules={[
-                      { required: true, message: "Please enter your password" },
                       {
                         min: 3,
-                        message: "Password must be at least 6 characters",
+                        message: "Password must be at least 3 characters",
                       },
                     ]}
+                    initialValue={''}
                   >
                     <Input
                       type="password"
                       className="bg-transparent form-control py-2"
                       placeholder="Enter Password"
+                      defaultValue={''}
+                      autoComplete="new-password"
                     />
                   </Form.Item>
                 </div>
@@ -203,20 +199,24 @@ function Settings() {
                     dependencies={["password"]}
                     hasFeedback
                     rules={[
-                      {
-                        required: true,
-                        message: "Please confirm your password",
-                      },
                       ({ getFieldValue }) => ({
                         validator(_, value) {
-                          if (!value || getFieldValue("password") === value) {
+                          if (value || getFieldValue("password")) {
+                            // If either field has a value, the other becomes required
+                            if (!value) {
+                              return Promise.reject(
+                                new Error("Please confirm your password")
+                              );
+                            }
                             return Promise.resolve();
                           }
-                          return Promise.reject(
-                            new Error("The two passwords do not match")
-                          );
+                          return Promise.resolve();
                         },
                       }),
+                      {
+                        min: 3,
+                        message: "Password must be at least 3 characters",
+                      },
                     ]}
                   >
                     <Input

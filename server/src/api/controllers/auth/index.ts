@@ -6,6 +6,7 @@ import User from "../../../models/User";
 import { validateLoginRequest, validateRegisterRequest } from "./validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import About from "../../../models/About";
 
 
 export const register = httpMethod(async (req, res): Promise<any> => {
@@ -43,8 +44,19 @@ export const login = httpMethod(async (req, res) => {
         };
     }
 
+    const user = {
+        _id: existingUser._id,
+        email: existingUser.email,
+        phone: existingUser.phone,
+        name: existingUser.name,
+        gender: existingUser.gender,
+        dob: existingUser.dob,
+        role: existingUser.role,
+        // Add other properties you need
+    };
     const session = await createSession(existingUser)
-    res.status(200).json({ user: existingUser, token: session.accessToken, expiresAt: session.expiresAt, message: "Successfully LoggedIn!" })
+    const userAbout = await About.findOne({ userId: existingUser._id })
+    res.status(200).json({ user: { ...user, about: userAbout || {} }, token: session.accessToken, expiresAt: session.expiresAt, message: "Successfully LoggedIn!" })
 })
 
 export const changePassword = httpMethod(async (req, res) => {

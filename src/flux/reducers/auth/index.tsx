@@ -11,12 +11,20 @@ type appUser = {
   dob: String;
   gender: String;
   role: String;
-  token: string;
-  expiresAt: string;
+  about: {
+    city: String;
+    country: String;
+    images: Array<String>;
+    notifications: String;
+    preferredGender: String;
+    userId: String;
+    _id: String;
+  }
 };
 
 type authType = {
   user: appUser;
+  token: String;
 };
 
 // @ts-ignore

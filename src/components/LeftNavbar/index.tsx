@@ -117,7 +117,7 @@ function LeftNavbar() {
           src="http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f7.png"
           alt=""
         />
-        <p>{`${user.name.first} ${user.name.last}`}</p>
+        <p>{`${user.name?.first} ${user.name?.last}`}</p>
       </div>
     </div>
   );
