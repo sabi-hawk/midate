@@ -131,7 +131,7 @@ function Signup() {
               </Form.Item>
             </div>
 
-            <div>
+            {/* <div>
               <label className="bold">Phone</label>
               <Form.Item
                 validateTrigger="onSubmit"
@@ -154,8 +154,21 @@ function Signup() {
                   autoFocus
                 />
               </Form.Item>
-            </div>
+            </div> */}
 
+            <div>
+              <label className="bold">Looking For</label>
+              <Form.Item name="preferredGender" initialValue="female">
+                <Select
+                  defaultValue="female"
+                  options={[
+                    { value: "Male", label: "Male" },
+                    { value: "Female", label: "Female" },
+                    { value: "Custom", label: "Custom" },
+                  ]}
+                />
+              </Form.Item>
+            </div>
             <div>
               <label className="bold">Confirm Password</label>
               <Form.Item

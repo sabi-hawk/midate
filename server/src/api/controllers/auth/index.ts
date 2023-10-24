@@ -21,6 +21,7 @@ export const register = httpMethod(async (req, res): Promise<any> => {
 
     const hashedPassword = await bcrypt.hash(reqData.password, 10);
     const user = await User.create({ ...reqData, password: hashedPassword });
+    await About.create({ userId: user._id, preferredGender: req.body.preferredGender })
     res.status(201).json({ user: { name: user.name, email: user.email, phone: user.phone, dob: user.dob, gender: user.gender }, message: "Signed Up Successfully !" })
 })
 
@@ -54,6 +55,7 @@ export const login = httpMethod(async (req, res) => {
         role: existingUser.role,
         // Add other properties you need
     };
+
     const session = await createSession(existingUser)
     const userAbout = await About.findOne({ userId: existingUser._id })
     res.status(200).json({ user: { ...user, about: userAbout || {} }, token: session.accessToken, expiresAt: session.expiresAt, message: "Successfully LoggedIn!" })
