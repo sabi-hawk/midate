@@ -29,6 +29,9 @@ const AboutSchema = new Schema({
     country: {
         type: String,
     },
+    profilePic: {
+        type: String,
+    },
     height: {
         type: Number,
     },
@@ -48,7 +51,13 @@ const AboutSchema = new Schema({
         type: Number,
         default: '0',
     },
-    images: [{
+    photos: [{
+        type: String,
+    }],
+    lookingForTags: [{
+        type: String,
+    }],
+    interestsTags: [{
         type: String,
     }],
     createdAt: {

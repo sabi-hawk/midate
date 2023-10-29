@@ -65,6 +65,7 @@
     .inner-wrap-profile-card {
       display: flex;
       // height: 100%;
+      height: calc(100% - 14px);
       gap: 35px;
       background-color: white;
       border-radius: 14px;
@@ -135,6 +136,7 @@
       align-items: center;
 
       .details {
+        width: 80%;
         h3 {
           font-size: 21px;
           font-weight: 400;
@@ -144,6 +146,22 @@
         p {
           font-size: 15px;
           margin-top: 10px;
+        }
+
+        .wrapper-details-fields {
+
+          .name-fields-wrap {
+            display: flex;
+
+            .name-wrap {
+              width: 50%;
+            }
+          }
+
+          .tag-line-field-wrap {
+            width: 75%;
+          }
+
         }
       }
       button {
@@ -243,5 +261,14 @@
         margin: 0;
       }
     }
+  }
+}
+
+.profile-pic-wrap {
+  img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50%;
   }
 }

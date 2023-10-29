@@ -50,3 +50,70 @@ export const settings = httpMethod(async (req: Request, res: Response) => {
 
     return res.status(404).json({ message: "User not found" });
 });
+
+export const updateProfileDetails = httpMethod(async (req: Request, res: Response) => {
+    const data = await authenticateRequest(req, res);
+    const { dob, name, tagLine } = req.body;
+
+    const user = await User.findOneAndUpdate(
+        { _id: data.userId },
+        {
+            $set: {
+                tagLine: tagLine || '',
+                name: name || { first: '', last: '' },
+                dob: dob,
+            },
+        },
+        { upsert: true, new: true }
+    );
+
+    if (!user) {
+        throw {
+            status: 404,
+            message: "User not found !",
+        };
+    }
+    res.status(200).json({ message: "Data Update Successfully!", user });
+});
+
+export const setLookingFor = httpMethod(async (req: Request, res: Response) => {
+    const data = await authenticateRequest(req, res);
+    const about = await About.findOneAndUpdate(
+        { userId: data.userId },
+        {
+            $set: {
+                lookingForTags: req.body.lookingForTags || [],
+            },
+        },
+        { upsert: true, new: true }
+    );
+
+    if (!about) {
+        throw {
+            status: 404,
+            message: "About User doesn't Exists !",
+        };
+    }
+    res.status(200).json({ message: "Looking For Tags Updated!", about });
+});
+
+export const setInterests = httpMethod(async (req: Request, res: Response) => {
+    const data = await authenticateRequest(req, res);
+    const about = await About.findOneAndUpdate(
+        { userId: data.userId },
+        {
+            $set: {
+                interestsTags: req.body.interestsTags || [],
+            },
+        },
+        { upsert: true, new: true }
+    );
+
+    if (!about) {
+        throw {
+            status: 404,
+            message: "About User doesn't Exists !",
+        };
+    }
+    res.status(200).json({ message: "Interests Tags Updated!", about });
+});

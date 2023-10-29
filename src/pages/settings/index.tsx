@@ -145,7 +145,7 @@ function Settings() {
                 </div>
               </Col>
               <Col className="col-field" span={12}>
-                <div>
+                {/* <div>
                   <label className="bold">Phone</label>
                   <Form.Item
                     name={"phone"}
@@ -166,7 +166,7 @@ function Settings() {
                       autoFocus
                     />
                   </Form.Item>
-                </div>
+                </div> */}
               </Col>
               <Col className="col-field" span={12}>
                 <div>

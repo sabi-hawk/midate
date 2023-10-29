@@ -19,6 +19,9 @@ type appUser = {
     preferredGender: String;
     userId: String;
     _id: String;
+    profilePic: string;
+    interestsTags: Array<string>;
+    lookingForTags: Array<string>;
   }
 };
 
