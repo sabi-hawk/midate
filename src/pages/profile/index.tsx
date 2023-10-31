@@ -125,7 +125,7 @@ function Profile() {
   const handleUpload = async () => {
     if (selectedProfilePicture.file) {
       const formData = new FormData();
-      formData.append("single", selectedProfilePicture.file);
+      formData.append("files", selectedProfilePicture.file);
 
       try {
         const { status, data } = await pictureUpload(formData);
@@ -152,7 +152,9 @@ function Profile() {
   const handleFilesChange = async(event: any) => {
     const files = event.target.files;
     const formData = new FormData();
-    formData.append("single", files);
+     for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
 
     try {
       const { status, data } = await picturesUpload(formData);
@@ -383,7 +385,7 @@ function Profile() {
           <Row className="row-photos">
             <div className="row-header">
               <h3>Photos</h3>
-              <input type="file" accept="image/*" onChange={handleFilesChange} />
+              <input type="file" accept="image/*" onChange={handleFilesChange} multiple/>
               {/* <Button>Add More</Button> */}
             </div>
             <div className="wrapper-photos">
