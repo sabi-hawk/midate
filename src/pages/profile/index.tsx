@@ -149,11 +149,11 @@ function Profile() {
     }
   };
 
-  const handleFilesChange = async(event: any) => {
+  const handleFilesChange = async (event: any) => {
     const files = event.target.files;
     const formData = new FormData();
-     for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
     }
 
     try {
@@ -220,7 +220,7 @@ function Profile() {
                   <Form
                     form={formLookingFor}
                     onFinish={onFinishLookingFor}
-                    className="auth-form px-4 py-5 px-md-5 bg-glass"
+                    className="form-looking-for-tags"
                     style={{
                       borderRadius: "0.35rem",
                     }}
@@ -241,18 +241,19 @@ function Profile() {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      className="btn btn-primary py-2 w-50 mx-auto"
+                      className="btn-plus-tick"
                     >
-                      S
+                      <i className="tick-icon" />
                     </Button>
                   </Form>
                 ) : (
                   <Button
+                  className="btn-plus-tick"
                     onClick={() => {
                       setEnableLookingFor(true);
                     }}
                   >
-                    A
+                    <i className="plus-icon" />
                   </Button>
                 )}
               </div>
@@ -385,11 +386,16 @@ function Profile() {
           <Row className="row-photos">
             <div className="row-header">
               <h3>Photos</h3>
-              <input type="file" accept="image/*" onChange={handleFilesChange} multiple/>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFilesChange}
+                multiple
+              />
               {/* <Button>Add More</Button> */}
             </div>
             <div className="wrapper-photos">
-              {Photos.map((url) => (
+              {user.about.photos.map((url) => (
                 <img src={url} alt="" />
               ))}
             </div>
@@ -404,7 +410,7 @@ function Profile() {
                 <Form
                   form={formInterests}
                   onFinish={onFinishInterests}
-                  className="auth-form px-4 py-5 px-md-5 bg-glass"
+                  className="form-looking-for-tags"
                   style={{
                     borderRadius: "0.35rem",
                   }}
@@ -425,18 +431,19 @@ function Profile() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    className="btn btn-primary py-2 w-50 mx-auto"
+                    className="btn-plus-tick"
                   >
-                    S
+                    <i className="tick-icon" />
                   </Button>
                 </Form>
               ) : (
                 <Button
+                className="btn-plus-tick"
                   onClick={() => {
                     setEnableInterests(true);
                   }}
                 >
-                  A
+                  <i className="plus-icon" />
                 </Button>
               )}
             </div>

@@ -149,7 +149,6 @@
         }
 
         .wrapper-details-fields {
-
           .name-fields-wrap {
             display: flex;
 
@@ -161,7 +160,6 @@
           .tag-line-field-wrap {
             width: 75%;
           }
-
         }
       }
       button {
@@ -236,6 +234,13 @@
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
+
+      img {
+        height: 150px;
+        width: 120px;
+        object-fit: cover;
+        border-radius: 14px;
+      }
     }
   }
 
@@ -270,5 +275,35 @@
     width: 100px;
     object-fit: cover;
     border-radius: 50%;
+  }
+}
+
+.plus-icon {
+  content: url(../../assets/plus-icon.png);
+  height: 20px;
+  width: 20px;
+}
+.tick-icon {
+  content: url(../../assets/tick-icon.png);
+  height: 20px;
+  width: 20px;
+}
+.btn-plus-tick {
+  background-color: #25c78b;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+}
+
+.form-looking-for-tags {
+  display: contents !important;
+  .ant-form-item {
+    margin: 0;
+    width: auto !important;
+  }
+
+  button {
+    height: 32px !important;
+    border-radius: 6px !important;
   }
 }

@@ -22,7 +22,8 @@ type appUser = {
     profilePic: string;
     interestsTags: Array<string>;
     lookingForTags: Array<string>;
-  }
+    photos: Array<string>;
+  };
 };
 
 type authType = {
