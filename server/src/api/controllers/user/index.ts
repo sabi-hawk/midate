@@ -57,29 +57,55 @@ export const settings = httpMethod(async (req: Request, res: Response) => {
 export const getMatches = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);
     const { preferredGender, city, country } = req.params;
-  
+
     // Create a filter object to exclude "unknown" parameters
     const filter = {
-      gender: preferredGender !== 'unknown' ? preferredGender : { $ne: 'unknown' },
-      city: city !== 'unknown' ? city : { $ne: 'unknown' },
-      country: country !== 'unknown' ? country : { $ne: 'unknown' },
+        gender: preferredGender !== 'unknown' ? preferredGender : { $ne: 'unknown' },
+        city: city !== 'unknown' ? city : { $ne: 'unknown' },
+        country: country !== 'unknown' ? country : { $ne: 'unknown' },
     };
-  
+
     try {
-      // Search documents in the About Model based on the filter and populate the userId field with user data
-      const matches = await About.find(filter).populate({
-        path: 'userId',
-        select: '-password', // Exclude the password field
-      });
-  
-      // Return the matches as a response
-      res.status(200).json({ matches });
+        // Search documents in the About Model based on the filter and populate the userId field with user data
+        // const matches = await About.find(filter).populate({
+        //     path: 'userId',
+        //     select: '-password', // Exclude the password field
+        // });
+
+        const matches = await About.aggregate([
+            {
+              $match: filter,
+            },
+            {
+              $lookup: {
+                from: 'users', // Replace with your User model's collection name
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user',
+              },
+            },
+            {
+              $addFields: {
+                user: {
+                  $arrayElemAt: ['$user', 0],
+                },
+              },
+            },
+            {
+              $project: {
+                'user.password': 0, // Exclude the password field
+                userId: 0
+              },
+            },
+          ]);
+        // Return the matches as a response
+        res.status(200).json({ matches });
     } catch (error) {
-      // Handle errors
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+        // Handle errors
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-  });
+});
 
 export const updateProfileDetails = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);

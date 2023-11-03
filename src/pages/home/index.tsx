@@ -11,6 +11,8 @@ import { useAppState } from "hooks";
 import { getUserMatches } from "api/user";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
+import { calculateAge } from "utils";
 
 function Home() {
   const {
@@ -18,6 +20,7 @@ function Home() {
       user: { about },
     },
   } = useAppState();
+  const [matches, setMatches] = useState([]);
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
   const [activeProfile, setActiveProfile] = useState<undefined | string>(
@@ -139,7 +142,7 @@ function Home() {
         city,
         country
       );
-
+      setMatches(data.matches || []);
       console.log("FOUND MATCHES", data);
     } catch (error) {
       toast.error("Error Finding Matches", {
@@ -150,6 +153,8 @@ function Home() {
   useEffect(() => {
     getPerfectMatches();
   }, []);
+
+  
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       {!activeProfile ? (
@@ -189,30 +194,30 @@ function Home() {
                 </Form>
               </Row>
               <Row className="row-user-cards" gutter={[16, 16]}>
-                {users.map((user, index) => (
+                {matches.map((match: any, index) => (
                   <Col span={12} key={index}>
                     <div className="user-card">
                       <Button
                         className="image-wrapper"
-                        onClick={() => setActiveProfile(user._id)}
+                        onClick={() => setActiveProfile(match)}
                       >
-                        <img src={user.profilePic} alt="" />
+                        <img src={match.profilePic} alt="" />
                       </Button>
                       <div className="details-wrapper">
                         <Button
                           className="name-btn"
-                          onClick={() => setActiveProfile(user._id)}
+                          onClick={() => setActiveProfile(match)}
                         >
-                          <h3>{user.name}</h3>
+                          <h3>{`${match.user.name.first} ${match.user.name.last}`}</h3>
                         </Button>
                         <div className="age-wrapper">
-                          <p>{user.age}</p>
+                          <p>{calculateAge(match.user.dob)}</p>
                           <i className="female-age-icon"></i>
                         </div>
-                        <p className="city-p">{user.city}</p>
+                        <p className="city-p">{match.city}</p>
                         <div className="gender-preference-wrap">
                           <p className="text-looking">LookingFor </p>
-                          <p className="gender-p">{user.lookingFor}</p>
+                          <p className="gender-p">{match.preferredGender}</p>
                         </div>
                         <div className="btn-wrapper">
                           <Button>
@@ -234,7 +239,7 @@ function Home() {
           </Row>
         </>
       ) : (
-        <Profile />
+        <Profile match={activeProfile}/>
       )}
     </Row>
   );

@@ -1,8 +1,9 @@
 import { Button, Col, Row } from "antd";
 import SideBarFiends from "components/OnlineFriends";
 import Story from "components/Story";
+import { calculateAge } from "utils";
 
-function Profile() {
+function Profile({ match }: any) {
   const images = [
     "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f1.png",
     "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f2.png",
@@ -30,8 +31,8 @@ function Profile() {
       <Col className="col-1-home user-profile" span={17}>
         <Row gutter={[16, 18]} className="user-header">
           <div className="details-wrap">
-            <h2> Jeccica J. Profile</h2>
-            <p className="tag-line">- So be careful, Grumpy Lina</p>
+            <h2> {`${match.user.name.first} ${match.user.name.last}`}</h2>
+            <p className="tag-line">{match.user.tagLine}</p>
             <div className="wrap-btn-match">
               <div className="inner-wrap">
                 <Button className="btn-cross">
@@ -43,24 +44,24 @@ function Profile() {
               </div>
             </div>
             <div className="age-wrapper">
-              <p>28</p>
+              <p>{calculateAge(match.user.dob)}</p>
               <i className="female-age-icon"></i>
             </div>
-            <p className="city-p">New York, USA</p>
+            <p className="city-p">{`${match.city}, ${match.country}`}</p>
             <div className="gender-preference-wrap">
               <p className="text-looking">LookingFor </p>
-              <p className="gender-p">Male</p>
+              <p className="gender-p">{match.preferredGender}</p>
             </div>
           </div>
           <div className="profile-pic-wrap">
             <img
-              src="http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png"
+              src={match.profilePic}
               alt=""
             />
           </div>
         </Row>
         <Row className="wrapper-pics">
-          {images.map((image) => (
+          {match.photos.map((image: string) => (
             <Col className="wrap-pic" span={8}>
               <img src={image} alt="" />
             </Col>
