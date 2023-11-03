@@ -15,6 +15,11 @@ const AboutSchema = new Schema({
         default: 'Female',
         enum: ['Male', 'Female', 'Custom']
     },
+    gender: {
+        type: String,
+        default: 'Female',
+        enum: ['Male', 'Female', 'Custom']
+    },
     notifications: {
         type: String,
         default: 'On',

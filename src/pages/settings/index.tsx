@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { userSettings } from "api/user";
 import "./index.scss";
 import { useAppState } from "hooks";
+import { useDispatch } from "react-redux";
+import { setUser } from "flux/reducers/auth";
 
 function Settings() {
   const {
@@ -13,11 +15,14 @@ function Settings() {
       user: { about, phone, email },
     },
   } = useAppState();
+  const { auth } = useAppState();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
     const { confirmPassword, ...remainingData } = values;
     try {
       const { data } = await userSettings(remainingData);
+      dispatch(setUser({ ...auth, user: { ...auth.user, about: data.about } }));
       toast.success(data?.message, {
         autoClose: 3000,
       });
@@ -52,7 +57,7 @@ function Settings() {
                   <label className="bold">Country</label>
                   <Form.Item
                     name={"country"}
-                    initialValue={about.country || ''}
+                    initialValue={about.country || ""}
                   >
                     <Input
                       className="bg-transparent form-control py-2"
@@ -64,10 +69,7 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">City</label>
-                  <Form.Item
-                    name={"city"}
-                    initialValue={about.city || ''}
-                  >
+                  <Form.Item name={"city"} initialValue={about.city || ""}>
                     <Input
                       className="bg-transparent form-control py-2"
                       placeholder="City"
@@ -78,7 +80,10 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Matches</label>
-                  <Form.Item name="matches" initialValue={about.preferredGender || "Female"}>
+                  <Form.Item
+                    name="preferredGender"
+                    initialValue={about.preferredGender || "Female"}
+                  >
                     <Select
                       defaultValue="Female"
                       options={[
@@ -109,7 +114,10 @@ function Settings() {
               <Col className="col-field" span={12}>
                 <div>
                   <label className="bold">Notifications</label>
-                  <Form.Item name="notifications" initialValue={about.notifications || "On"}>
+                  <Form.Item
+                    name="notifications"
+                    initialValue={about.notifications || "On"}
+                  >
                     <Select
                       defaultValue="On"
                       options={[
@@ -179,13 +187,13 @@ function Settings() {
                         message: "Password must be at least 3 characters",
                       },
                     ]}
-                    initialValue={''}
+                    initialValue={""}
                   >
                     <Input
                       type="password"
                       className="bg-transparent form-control py-2"
                       placeholder="Enter Password"
-                      defaultValue={''}
+                      defaultValue={""}
                       autoComplete="new-password"
                     />
                   </Form.Item>

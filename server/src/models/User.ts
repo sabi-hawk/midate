@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     phone: { type: String },
     dob: { type: String },
     tagLine: {type: String, default: '- So be careful, Grumpy Lina'},
-    gender: { type: String },
+    // gender: { type: String },
     role: { type: String, default: "user" },
     loggedInAt: { type: Date },
     lastLoggedInAt: { type: Date },

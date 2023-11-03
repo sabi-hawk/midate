@@ -7,8 +7,17 @@ import Profile from "components/Profile";
 import SideBarFriends from "components/OnlineFriends";
 import "./index.scss";
 import axios from "axios";
+import { useAppState } from "hooks";
+import { getUserMatches } from "api/user";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
+  const {
+    auth: {
+      user: { about },
+    },
+  } = useAppState();
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
   const [activeProfile, setActiveProfile] = useState<undefined | string>(
@@ -118,6 +127,29 @@ function Home() {
         console.error("Geocoding request failed:", error);
       });
   });
+
+  const getPerfectMatches = async () => {
+    const preferredGender = about.preferredGender;
+    const city = about?.city || "unknown";
+    const country = about?.country || "unknown";
+
+    try {
+      const { status, data } = await getUserMatches(
+        preferredGender,
+        city,
+        country
+      );
+
+      console.log("FOUND MATCHES", data);
+    } catch (error) {
+      toast.error("Error Finding Matches", {
+        autoClose: 3000,
+      });
+    }
+  };
+  useEffect(() => {
+    getPerfectMatches();
+  }, []);
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       {!activeProfile ? (

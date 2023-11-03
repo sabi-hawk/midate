@@ -23,7 +23,6 @@ function Signup() {
   };
 
   const onFinish = (values: any) => {
-    console.log("Received values:", values);
     handleSignup(values); // You can pass the form values to your handleSignup function
   };
 
@@ -77,13 +76,13 @@ function Signup() {
             </div>
             <div>
               <label className="bold">I am a</label>
-              <Form.Item name="gender" initialValue="male">
+              <Form.Item name="gender" initialValue="Male">
                 <Select
-                  defaultValue="male"
+                  defaultValue="Male"
                   options={[
-                    { value: "male", label: "Male" },
-                    { value: "female", label: "Female" },
-                    { value: "custom", label: "Custom" },
+                    { value: "Male", label: "Male" },
+                    { value: "Female", label: "Female" },
+                    { value: "Custom", label: "Custom" },
                   ]}
                 />
               </Form.Item>
@@ -158,9 +157,9 @@ function Signup() {
 
             <div>
               <label className="bold">Looking For</label>
-              <Form.Item name="preferredGender" initialValue="female">
+              <Form.Item name="preferredGender" initialValue="Female">
                 <Select
-                  defaultValue="female"
+                  defaultValue="Female"
                   options={[
                     { value: "Male", label: "Male" },
                     { value: "Female", label: "Female" },

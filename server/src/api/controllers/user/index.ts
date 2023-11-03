@@ -31,12 +31,12 @@ export const settings = httpMethod(async (req: Request, res: Response) => {
         { new: true }
     );
 
-    await About.findOneAndUpdate(
+    const about = await About.findOneAndUpdate(
         { userId: data.userId },
         {
             $set: {
-                city: req.body.city || '',
-                country: req.body.country || '',
+                city: req.body.city?.toLowerCase() || '',
+                country: req.body.country?.toLowerCase() || '',
                 preferredGender: req.body.preferredGender || 'Female',
                 notifications: req.body.notifications || 'On',
             },
@@ -44,12 +44,42 @@ export const settings = httpMethod(async (req: Request, res: Response) => {
         { upsert: true, new: true }
     );
 
-    if (updatedUser) {
-        return res.status(200).json({ message: "Data Update Successfully!" });
-    }
+    if (!updatedUser) {
+        throw {
+            status: 404,
+            message: "User not found !",
+        };
 
-    return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Data Updated Successfully!", about });
 });
+
+export const getMatches = httpMethod(async (req: Request, res: Response) => {
+    const data = await authenticateRequest(req, res);
+    const { preferredGender, city, country } = req.params;
+  
+    // Create a filter object to exclude "unknown" parameters
+    const filter = {
+      gender: preferredGender !== 'unknown' ? preferredGender : { $ne: 'unknown' },
+      city: city !== 'unknown' ? city : { $ne: 'unknown' },
+      country: country !== 'unknown' ? country : { $ne: 'unknown' },
+    };
+  
+    try {
+      // Search documents in the About Model based on the filter and populate the userId field with user data
+      const matches = await About.find(filter).populate({
+        path: 'userId',
+        select: '-password', // Exclude the password field
+      });
+  
+      // Return the matches as a response
+      res.status(200).json({ matches });
+    } catch (error) {
+      // Handle errors
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
 
 export const updateProfileDetails = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);

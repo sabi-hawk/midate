@@ -12,13 +12,13 @@ type appUser = {
   gender: String;
   role: String;
   about: {
-    city: String;
-    country: String;
-    images: Array<String>;
-    notifications: String;
-    preferredGender: String;
-    userId: String;
-    _id: String;
+    city: string;
+    country: string;
+    images: Array<string>;
+    notifications: string;
+    preferredGender: string;
+    userId: string;
+    _id: string;
     profilePic: string;
     interestsTags: Array<string>;
     lookingForTags: Array<string>;
