@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "antd";
 import type { SelectProps } from "antd";
 import SideBarFiends from "components/OnlineFriends";
@@ -7,39 +7,43 @@ import TextArea from "antd/es/input/TextArea";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.scss";
-import { createStory } from "api/story";
+import { createStory, getLatestFeed } from "api/story";
 
 function Stories() {
+  const [stories, setStories] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
 
   const [form] = Form.useForm();
-  const stories = [
-    {
-      content:
-        "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-      likes: 230,
-      comments: 50,
-    },
-    {
-      content:
-        "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-      likes: 230,
-      comments: 50,
-    },
-    {
-      content:
-        "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-      likes: 230,
-      comments: 50,
-    },
-    {
-      content:
-        "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-      likes: 230,
-      comments: 50,
-    },
-  ];
+  // const stories = [
+  //   {
+  //     content:
+  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
+  //     likes: 230,
+  //     comments: 50,
+  //   },
+  //   {
+  //     content:
+  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
+  //     likes: 230,
+  //     comments: 50,
+  //   },
+  //   {
+  //     content:
+  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
+  //     likes: 230,
+  //     comments: 50,
+  //   },
+  //   {
+  //     content:
+  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
+  //     likes: 230,
+  //     comments: 50,
+  //   },
+  // ];
 
   const onFinish = async (values: any) => {
     const { data } = await createStory(values.storyContent);
@@ -49,6 +53,19 @@ function Stories() {
     form.resetFields();
   };
 
+  const getLatestStoriesFeed = async () => {
+    try {
+      const { data } = await getLatestFeed(page, pageSize);
+      setStories(data.stories || []);
+    } catch (error) {
+      toast.error("Error Fetching Latest Feed", {
+        autoClose: 3000,
+      });
+    }
+  };
+  useEffect(() => {
+    getLatestStoriesFeed();
+  }, []);
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       <Row>

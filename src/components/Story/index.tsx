@@ -14,10 +14,10 @@ function Story({ story }: any) {
       <div className="row-header">
         <div className="wrapper-details">
           <Avatar
-            src={<img src={story.about.profilePic || ""} alt="avatar" />}
+            src={<img src={story?.about?.profilePic || ""} alt="avatar" />}
           />
           <div className="details">
-            <p className="user-name">{`${story.user.name.first} ${story.user.name.last}`}</p>
+            <p className="user-name">{`${story.user?.name.first} ${story.user?.name.last}`}</p>
             <p className="time-posted"> {getTimePassed(story.createdAt)}</p>
           </div>
         </div>

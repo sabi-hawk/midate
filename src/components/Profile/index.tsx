@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Empty, Row } from "antd";
 import { getStories } from "api/story";
 import SideBarFiends from "components/OnlineFriends";
 import Story from "components/Story";
@@ -32,10 +32,10 @@ function Profile({ match, setActiveProfile }: any) {
     },
   ];
 
-  const getUserStories = async() => {
+  const getUserStories = async () => {
     const { data } = await getStories(match.user._id);
     setStories(data.stories);
-    console.log("Stories", data.stories)
+    console.log("Stories", data.stories);
   };
   useEffect(() => {
     getUserStories();
@@ -87,9 +87,14 @@ function Profile({ match, setActiveProfile }: any) {
           ))}
         </Row>
         <Row gutter={[16, 18]} className="wrapper-stories">
-          {stories.map((story) => (
-            <Story story={story} />
-          ))}
+          {stories.length > 0 ? (
+            stories.map((story) => <Story story={story} />)
+          ) : (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="No stories found"
+            />
+          )}
         </Row>
       </Col>
 
