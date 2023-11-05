@@ -1,25 +1,24 @@
 import { Avatar, Button } from "antd";
 import React from "react";
 import "./index.scss";
+import { useAppState } from "hooks";
+import { getTimePassed } from "utils";
 
 function Story({ story }: any) {
+  const {
+    auth: { user },
+  } = useAppState();
+
   return (
     <div className="wrapper-story">
       <div className="row-header">
         <div className="wrapper-details">
           <Avatar
-            src={
-              <img
-                src={
-                  "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png"
-                }
-                alt="avatar"
-              />
-            }
+            src={<img src={story.about.profilePic || ""} alt="avatar" />}
           />
           <div className="details">
-            <p className="user-name">Jessica J.</p>
-            <p className="time-posted"> 20 minutes ago</p>
+            <p className="user-name">{`${story.user.name.first} ${story.user.name.last}`}</p>
+            <p className="time-posted"> {getTimePassed(story.createdAt)}</p>
           </div>
         </div>
         <Button className="btn-three-dot">

@@ -239,7 +239,7 @@ function Home() {
           </Row>
         </>
       ) : (
-        <Profile match={activeProfile}/>
+        <Profile match={activeProfile} setActiveProfile={setActiveProfile}/>
       )}
     </Row>
   );

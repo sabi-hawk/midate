@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row } from "antd";
-import { Select } from "antd";
 import type { SelectProps } from "antd";
-import "./index.scss";
 import SideBarFiends from "components/OnlineFriends";
 import Story from "components/Story";
+import TextArea from "antd/es/input/TextArea";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./index.scss";
+import { createStory } from "api/story";
 
 function Stories() {
   const [data, setData] = useState<SelectProps["options"]>([]);
@@ -38,11 +41,13 @@ function Stories() {
     },
   ];
 
-  const onFinish = (values: any) => {};
-
-  const handleSearch = (newValue: string) => {};
-
-  const handleChange = (newValue: string) => {};
+  const onFinish = async (values: any) => {
+    const { data } = await createStory(values.storyContent);
+    toast.success(data.message, {
+      autoClose: 3000,
+    });
+    form.resetFields();
+  };
 
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
@@ -54,22 +59,10 @@ function Stories() {
           <Row gutter={[16, 16]} className="row-wrapper-stories">
             <Row>
               <Form form={form} onFinish={onFinish}>
-                <Form.Item name="searchString">
-                  <Select
-                    className="input-search"
-                    showSearch
-                    value={value}
-                    placeholder="What's on your mind?"
-                    defaultActiveFirstOption={false}
-                    suffixIcon={null}
-                    filterOption={false}
-                    onSearch={handleSearch}
-                    onChange={handleChange}
-                    notFoundContent={null}
-                    options={(data || []).map((d) => ({
-                      value: d.value,
-                      label: d.text,
-                    }))}
+                <Form.Item name="storyContent">
+                  <TextArea
+                    placeholder="Write what's in your mind?"
+                    autoSize={{ minRows: 2, maxRows: 6 }}
                   />
                 </Form.Item>
                 <Button

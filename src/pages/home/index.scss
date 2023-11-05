@@ -403,3 +403,14 @@
     }
   }
 }
+
+.arrow-back-wrap {
+  display: flex;
+  padding: 0;
+  align-items: center;
+  border: none;
+  box-shadow: none;
+  h4 {
+    margin: 0;
+  }
+}

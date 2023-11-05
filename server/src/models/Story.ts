@@ -13,6 +13,7 @@ const StorySchema = new Schema({
     },
     content: {
         type: String,
+        default: ''
     },
     likes: [
         {
