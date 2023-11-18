@@ -9,7 +9,7 @@ export const calculateAge = (dateOfBirth: string) => {
   return age;
 };
 
-export const getTimePassed = (timestamp: any) =>{
+export const getTimePassed = (timestamp: any) => {
   const now = new Date();
   const pastTime = new Date(timestamp);
 
@@ -30,7 +30,9 @@ export const getTimePassed = (timestamp: any) =>{
     return `${hours} Hour${hours > 1 ? 's' : ''} ${remainingMinutes} Minute${remainingMinutes > 1 ? 's' : ''} ago`;
   } else if (minutes > 0) {
     return `${minutes} Minute${minutes > 1 ? 's' : ''} ago`;
-  } else {
+  } else if (seconds > 0) {
     return `${seconds} Second${seconds > 1 ? 's' : ''} ago`;
+  } else {
+    return `1 Second ago`; // Default to 1 second if no time has passed
   }
-}
+};

@@ -29,7 +29,7 @@ export const sendMessage = httpMethod(async (req: Request, res: Response) => {
 
     let memberFound: Boolean = false;
     await chat?.members.forEach((member) => {
-        if (member === req.body.senderId) {
+        if (member.toString() === req.body.senderId) {
             memberFound = true
         }
     })

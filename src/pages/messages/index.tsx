@@ -3,10 +3,12 @@ import { Avatar, Button, Col, Form, Input, Row } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./index.scss";
-import { getUserConversations } from "api/conversation";
+import { getMessages, getUserConversations, sendUserMessage } from "api/conversation";
 import { useAppState } from "hooks";
 import { getTimePassed } from "utils";
+import { socket } from "index";
+import "./index.scss";
+import ChatBox from "components/ChatBox";
 
 function Messages() {
   const {
@@ -14,50 +16,54 @@ function Messages() {
   } = useAppState();
   const [conversations, setConversations] = useState([]);
   const [leftSideBarUsers, setLeftSideBarUsers] = useState([]);
-  const users = [
-    {
-      _id: "123",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-    {
-      _id: "124",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-    {
-      _id: "125",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-    {
-      _id: "126",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-    {
-      _id: "127",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-    {
-      _id: "128",
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      name: "Ammi Watts",
-      lastMessage: "Yes, we can meet. What Time?",
-      time: "Today | 05:30 PM",
-    },
-  ];
+  const [activeChat, setActiveChat] = useState<any>(undefined);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  
+  const [sendMessage, setSendMessage] = useState(null);
+  const [receiveMessage, setReceiveMessage] = useState(null);
+
+  // initializing socket
+  useEffect(() => {
+    socket.emit("new-user-add", user._id);
+    socket.on("get-users", (users: any) => {
+      setOnlineUsers(users);
+    });
+  }, [user]); // [user]
+
+  useEffect(() => {
+    // adding event listener for window unload
+    console.log("Started listening for event beforeunload");
+    window.addEventListener("beforeunload", handleWindowUnload);
+
+    // remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", handleWindowUnload);
+    };
+  }, []);
+
+  const handleWindowUnload = () => {
+    socket.emit("disconnected");
+  };
+
+  // send message to the socket server
+  useEffect(() => {
+    if (sendMessage !== null) {
+      socket.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
+
+  // receive message from socket server
+  useEffect(() => {
+    socket.on("receive-message", (data: any) => {
+      setReceiveMessage(data);
+    });
+  }, []);
+
+  const checkOnlineStatus = (chat: any) => {
+    const chatMember = chat.members.find((member: any) => member !== user._id);
+    const online = onlineUsers.find((user: any) => user.userId === chatMember);
+    return online ? true : false;
+  };
 
   const getConversations = async () => {
     try {
@@ -70,6 +76,7 @@ function Messages() {
       });
     }
   };
+
   useEffect(() => {
     getConversations();
   }, []);
@@ -81,7 +88,6 @@ function Messages() {
           const otherMember = conversation.members.find(
             (member: any) => member._id !== user._id
           );
-
           return otherMember;
         }) || [];
 
@@ -106,6 +112,19 @@ function Messages() {
       return null;
     }
   };
+
+  const handleActiveChat = (user: any) => {
+    const relevantConversation = conversations.find((conversation: any) => {
+      // Check if the members array includes the specified userId
+      return conversation.members.some(
+        (member: any) => member._id === user._id
+      );
+    });
+    console.log("Relevant", relevantConversation);
+    // @ts-ignore
+    setActiveChat({ conversation: relevantConversation, receiver: user });
+  };
+
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       <Row>
@@ -133,7 +152,10 @@ function Messages() {
           <div className="user-cards-wrapper scroll-hide">
             {leftSideBarUsers.map((user: any) => (
               <>
-                <div className="user-card">
+                <div
+                  className="user-card"
+                  onClick={() => handleActiveChat(user)}
+                >
                   <div className="details">
                     <Avatar
                       src={<img src={user?.about?.profilePic} alt="avatar" />}
@@ -156,58 +178,11 @@ function Messages() {
           </div>
         </Col>
         <Col className="col-2-messages right-sidebar" span={16}>
-          <div className="header">
-            <div className="details">
-              <Avatar
-                src={
-                  <img
-                    src="http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png"
-                    alt="avatar"
-                  />
-                }
-              />
-              <h3>Ammi Watts</h3>
-            </div>
-
-            <Button>
-              <i className="icon-favorite"></i>
-            </Button>
-          </div>
-          <div className="messages-body scroll-hide">
-            <p className="pass-time-text"> Today | 06:32 PM</p>
-            <div className="message-wrap message-in">
-              <p className="message">
-                Oh, hello! All perfectly. I will check it and get back to you
-                soon
-              </p>
-              <p className="p-tag-time">04:45 PM</p>
-            </div>
-            <div className="message-wrap message-out">
-              <p className="message">Yes, Thank You</p>
-              <p className="p-tag-time">04:45 PM</p>
-            </div>
-            <div className="message-wrap message-in">
-              <p className="message">
-                Oh, hello! All perfectly. I will check it and get back to you
-                soon
-              </p>
-              <p className="p-tag-time">04:45 PM</p>
-            </div>
-            <div className="message-wrap message-out">
-              <p className="message">Yes, Thank You</p>
-              <p className="p-tag-time">04:45 PM</p>
-            </div>
-          </div>
-
-          <div className="footer">
-            <Button>
-              <i className="icon-emoji"></i>
-            </Button>
-            <Input placeholder="Type your message here ..." />
-            <Button>
-              <i className="icon-send"></i>
-            </Button>
-          </div>
+        <ChatBox
+            chat={activeChat}
+            setSendMessage={setSendMessage}
+            receiveMessage={receiveMessage}
+          />
         </Col>
       </Row>
     </Row>
