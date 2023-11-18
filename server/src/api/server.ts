@@ -7,6 +7,11 @@ import path from 'path';
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 
+type socketUser = {
+  userId: string,
+  socketId: string
+}
+
 dotenv.config()
 // require('dotenv').config();
 
@@ -60,16 +65,40 @@ const server = app.listen(port, () => {
 
 
 // Initialize Socket.IO
-const io = new Server(server);
+const socket = new Server(server);
 
-io.on("connection", async (socket) => {
-  console.log(`Socket ${socket.id} connected`);
-
-  socket.on("test", () => {
-    console.log("Test Emit is Working Fine")
+let activeUsers: Array<socketUser> = [];
+socket.on('connection', (client) => {
+  client.on('new-user-add', (newUserId) => {
+    if (!activeUsers.some((user: socketUser) => user.userId === newUserId)) {
+      activeUsers.push({
+        userId: newUserId,
+        socketId: client.id
+      })
+    }
+    console.log("Connected Users", activeUsers);
+    socket.emit('get-users', activeUsers);
   })
-  socket.on("disconnect", () => {
-    console.log(`Socket ${socket.id} disconnected`);
-  });
 
-});
+  client.on('send-message', (data: any) => {
+    const { receiverId } = data;
+    const user = activeUsers.find((user) => user.socketId !== client.id)
+    if (user) {
+      socket.to(user.socketId).emit("receive-message", data)
+    }
+  })
+
+  client.on('send-notification', (data: any) => {
+    console.log("Active Users", activeUsers)
+    const { userId } = data;
+    const user = activeUsers.find((user) => user.userId === userId)
+    console.log("Inside SND NOTIFICATION", user)
+    if (user) {
+      socket.to(user.socketId).emit("receive-notification", data)
+    }
+  })
+  client.on('disconnect', () => {
+    activeUsers = activeUsers.filter((user: socketUser) => user.socketId !== client.id)
+    socket.emit('get-users', activeUsers);
+  })
+})

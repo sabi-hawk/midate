@@ -32,7 +32,7 @@
 .left-nav-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100vh - 10px);
   justify-content: space-between;
 
   .ant-menu-title-content {
@@ -73,8 +73,8 @@
   justify-content: center;
 
   img {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     border-radius: 50%;
     object-fit: cover;
   }

@@ -4,6 +4,9 @@ import { authenticateRequest } from "../../middleware/auth";
 import User from "../../../models/User";
 import About from "../../../models/About";
 import bcrypt from "bcrypt";
+import Conversation from "../../../models/Conversation";
+const { ObjectId } = require('mongoose').Types;
+
 
 export const getUser = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);
@@ -69,32 +72,44 @@ export const getMatches = httpMethod(async (req: Request, res: Response) => {
 
         const matches = await About.aggregate([
             {
-              $match: filter,
+                $match: filter,
             },
             {
-              $lookup: {
-                from: 'users', // Replace with your User model's collection name
-                localField: 'userId',
-                foreignField: '_id',
-                as: 'user',
-              },
-            },
-            {
-              $addFields: {
-                user: {
-                  $arrayElemAt: ['$user', 0],
+                $lookup: {
+                    from: 'users', // Replace with your User model's collection name
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user',
                 },
-              },
             },
             {
-              $project: {
-                'user.password': 0, // Exclude the password field
-                userId: 0
-              },
+                $addFields: {
+                    user: {
+                        $arrayElemAt: ['$user', 0],
+                    },
+                },
             },
-          ]);
+            {
+                $project: {
+                    'user.password': 0, // Exclude the password field
+                    userId: 0
+                },
+            },
+        ]);
+
+        const filteredMatches = [];
+
+        for (const match of matches) {
+            const conversationExists = await Conversation.exists({
+                members: { $all: [match.user._id.toString(), data.userId.toString()] },
+            });
+            // If conversationExists is false, it means a Conversation doesn't exist, so include this match
+            if (!conversationExists) {
+                filteredMatches.push(match);
+            }
+        }
         // Return the matches as a response
-        res.status(200).json({ matches });
+        res.status(200).json({ matches: filteredMatches });
     } catch (error) {
         // Handle errors
         console.error('Error:', error);

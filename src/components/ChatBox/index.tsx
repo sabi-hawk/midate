@@ -1,4 +1,4 @@
-import { Avatar, Button, Input } from "antd";
+import { Avatar, Button, Input, Empty } from "antd";
 import { getMessages, sendUserMessage } from "api/conversation";
 import { useAppState } from "hooks";
 import React, { useEffect, useRef, useState } from "react";
@@ -107,7 +107,12 @@ function ChatBox({ chat, setSendMessage, receiveMessage }: any) {
           </div>
         </>
       ) : (
-        <div>No Chat Selected</div>
+        <div className="empty-messages">
+          <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="No Chat Selected"
+            />
+        </div>
       )}
     </>
   );

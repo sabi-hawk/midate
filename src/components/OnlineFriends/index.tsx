@@ -1,4 +1,4 @@
-import { Avatar, Button, Row, Col } from "antd";
+import { Avatar, Button, Row, Col, Empty } from "antd";
 import React from "react";
 import "./index.scss";
 
@@ -9,7 +9,7 @@ function OnlineFriends() {
         <div className="heading">
           <h2>Online Friends</h2>
         </div>
-        <div className="user-card">
+        {/* <div className="user-card">
           <div className="wrapper-user-details">
             <Avatar
               src={
@@ -46,6 +46,12 @@ function OnlineFriends() {
             </div>
           </div>
           <Button>Chat</Button>
+        </div> */}
+        <div className="">
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="No Online Friends"
+          />
         </div>
       </Row>
     </Col>

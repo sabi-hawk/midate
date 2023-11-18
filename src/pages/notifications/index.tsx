@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Col, Row } from "antd";
+import { Avatar, Button, Col, Row, Empty } from "antd";
 import SideBarFiends from "components/OnlineFriends";
 import {
   createNotification,
@@ -12,45 +12,17 @@ import "./index.scss";
 import { createConversation } from "api/conversation";
 import { useNavigate } from "react-router-dom";
 import { getTimePassed } from "utils";
+import { socket } from "index";
+import { useAppState } from "hooks";
 
 function Notifications() {
+  const {
+    auth: {
+      user,
+    },
+  } = useAppState();
   const navigate = useNavigate();
   const [notifications2, setNotifications] = useState([]);
-  const notifications = [
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-
-    {
-      url: "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-      content: "Monroe Parker liked you back, you can now chat with her.",
-      time: "2 mintues ago",
-    },
-  ];
 
   const fetchNotifications = async () => {
     try {
@@ -63,8 +35,18 @@ function Notifications() {
       });
     }
   };
+
   useEffect(() => {
     fetchNotifications();
+  }, []);
+
+  // receive message from socket server
+  useEffect(() => {
+    socket.emit("new-user-add", user._id);
+    socket.on("receive-notification", (data: any) => {
+      fetchNotifications();
+      console.log("Notification Received");
+    });
   }, []);
 
   const handleChatNotification = async (notification: any) => {
@@ -89,6 +71,7 @@ function Notifications() {
           autoClose: 3000,
         });
         navigate("/messages");
+        socket.emit("send-notification", { userId: notification.sender._id });
       } else {
         const { data } = await delNotification(notification._id);
         toast.success("Chat Initiated Successfully!", {
@@ -110,33 +93,42 @@ function Notifications() {
       <Row>
         <Col className="col-1-notifications notifications" span={17}>
           <Row className="wrapper-notifications">
-            {notifications2.map((notification: any) => (
-              <Row className="user-card">
-                <div className="wrapper-user-details">
-                  <i className="notification-icon"></i>
-                  <Avatar
-                    src={
-                      <img
-                        src={notification?.sender?.about?.profilePic}
-                        alt="avatar"
-                      />
-                    }
-                  />
-                  <div className="wrapper-content">
-                    <h4>
-                      {" "}
-                      {notification.type === "confirmation"
-                        ? `${notification.sender.name.first} ${notification.sender.name.last} liked you, you can Like Back & chat now.`
-                        : `${notification.sender.name.first} ${notification.sender.name.last} liked you back, you can now chat.`}
-                    </h4>
-                    <p> {getTimePassed(notification.createdAt)}</p>
+            {notifications2.length > 0 ? (
+              notifications2.map((notification: any) => (
+                <Row className="user-card">
+                  <div className="wrapper-user-details">
+                    <i className="notification-icon"></i>
+                    <Avatar
+                      src={
+                        <img
+                          src={notification?.sender?.about?.profilePic}
+                          alt="avatar"
+                        />
+                      }
+                    />
+                    <div className="wrapper-content">
+                      <h4>
+                        {" "}
+                        {notification.type === "confirmation"
+                          ? `${notification.sender.name.first} ${notification.sender.name.last} liked you, you can Like Back & chat now.`
+                          : `${notification.sender.name.first} ${notification.sender.name.last} liked you back, you can now chat.`}
+                      </h4>
+                      <p> {getTimePassed(notification.createdAt)}</p>
+                    </div>
                   </div>
-                </div>
-                <Button onClick={() => handleChatNotification(notification)}>
-                  Chat
-                </Button>
-              </Row>
-            ))}
+                  <Button onClick={() => handleChatNotification(notification)}>
+                    Chat
+                  </Button>
+                </Row>
+              ))
+            ) : (
+              <div className="no-notification-main">
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No Notifications found"
+                />
+              </div>
+            )}
           </Row>
         </Col>
 

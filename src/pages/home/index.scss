@@ -9,7 +9,21 @@
 }
 
 .col-1-home {
-  padding: 10px 20px 10px 32px;
+  padding: 0px 20px;
+  height: calc(100vh - 85px);
+  overflow: auto;
+  // Hide scrollbar for Firefox
+  scrollbar-width: thin;
+  scrollbar-color: #25c78b #25c78b;
+
+  // Hide scrollbar for Chrome, Safari, and Opera
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #25c78b;
+  }
   &.user-profile {
     padding: 10px 20px 10px 32px;
     max-height: 100vh;
@@ -17,7 +31,7 @@
 
     // Hide scrollbar for Firefox
     scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
+    scrollbar-color: #25c78b #25c78b;
 
     // Hide scrollbar for Chrome, Safari, and Opera
     &::-webkit-scrollbar {
@@ -25,7 +39,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: transparent;
+      background-color: #25c78b;
     }
   }
 
@@ -104,7 +118,7 @@
       }
 
       .wrap-btn-match {
-        display: flex;
+        display: none;
         justify-content: flex-end;
 
         .inner-wrap {
@@ -258,14 +272,29 @@
 }
 
 .row-user-cards {
-  padding-top: 18px;
+  // padding-top: 18px;
   flex-direction: row !important;
+  // height: calc(100vh - 175px);
+  overflow: auto;
+
+  // Hide scrollbar for Firefox
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  // Hide scrollbar for Chrome, Safari, and Opera
+  &::-webkit-scrollbar {
+    width: 0.4em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #25c78b;
+  }
   .user-card {
     display: flex;
     width: 100%;
     background-color: white;
     border-radius: 14px;
-    margin-top: 10px;
+    // margin-top: 10px;
 
     .image-wrapper {
       height: 100%;
@@ -413,4 +442,14 @@
   h4 {
     margin: 0;
   }
+}
+
+.no-user-card-main {
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  height: calc(100vh - 190px);
+  display: flex;
+  width: 100%;
 }

@@ -75,11 +75,11 @@ function Stories() {
         <Col className="col-1-stories stories" span={17}>
           <Row gutter={[16, 16]} className="row-wrapper-stories">
             <Row>
-              <Form form={form} onFinish={onFinish}>
+              <Form form={form} onFinish={onFinish} className="story-form-main">
                 <Form.Item name="storyContent">
                   <TextArea
                     placeholder="Write what's in your mind?"
-                    autoSize={{ minRows: 2, maxRows: 6 }}
+                    // autoSize={{ minRows: 2, maxRows: 3 }}
                   />
                 </Form.Item>
                 <Button

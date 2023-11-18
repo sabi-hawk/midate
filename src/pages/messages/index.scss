@@ -105,7 +105,7 @@
 }
 
 .left-sidebar {
-  height: calc(100vh - 75px);
+  height: calc(100vh - 85px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -116,6 +116,7 @@
     flex-grow: 1;
     height: 100%;
     overflow-y: auto;
+    background: white;
   }
 
   .icon-dots {
@@ -185,6 +186,9 @@
           h3 {
             margin: 0;
             font-size: 17px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .p-tag-message {
@@ -200,6 +204,9 @@
           .p-tag-time {
             margin: 0;
             color: #afb8cf;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
@@ -354,4 +361,12 @@ p.p-tag-time {
 .pass-time-text{
   color: #AFB8CF;
   text-align: center;
+}
+
+.empty-messages{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
