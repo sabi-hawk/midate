@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { httpMethod } from "..";
 import Conversation from "../../../models/Conversation";
 import { authenticateRequest } from "../../middleware/auth";
+import About from "../../../models/About";
 
 export const createConversation = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);
@@ -80,15 +81,52 @@ export const userChats = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);
     // @ts-ignore
     if (req.params.userId !== data?.userId) {
-        return res.status(401).json({
-            message: 'You are not authorized to access this chat.'
-        })
+        throw {
+            status: 401,
+            message: "You are not authorized to access this chat."
+        }
+
 
     }
-    const chat = await Conversation.find({
+    // const chat = await Conversation.find({
+    //     members: { $in: [req.params.userId] }
+    // })
+    // res.status(200).json({ conversations: chat });
+    const chats = await Conversation.find({
         members: { $in: [req.params.userId] }
-    })
-    return res.status(200).json(chat);
+    }).populate('members', '-password');
+
+    // Extract userIds from the conversations
+    const userIds = chats.reduce((acc, chat) => {
+        // @ts-ignore
+        return acc.concat(chat.members.map((member) => member._id.toString()));
+    }, []);
+
+    // Find about data for the userIds
+    const aboutData = await About.find({ userId: { $in: userIds } });
+
+    // Create a map of userId to about data
+    const aboutDataMap = new Map();
+    aboutData.forEach((about) => {
+        // @ts-ignore
+        aboutDataMap.set(about.userId.toString(), about);
+    });
+
+    // Append about data to each user in the chat
+    const chatsWithAbout = chats.map((chat) => {
+        const membersWithAbout = chat.members.map((member) => ({
+            // @ts-ignore
+            ...member._doc,
+            about: aboutDataMap.get(member._id.toString()),
+        }));
+        return {
+            // @ts-ignore
+            ...chat._doc,
+            members: membersWithAbout,
+        };
+    });
+
+    res.status(200).json({ conversations: chatsWithAbout });
 
 })
 

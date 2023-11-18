@@ -66,11 +66,6 @@ export const getMatches = httpMethod(async (req: Request, res: Response) => {
     };
 
     try {
-        // Search documents in the About Model based on the filter and populate the userId field with user data
-        // const matches = await About.find(filter).populate({
-        //     path: 'userId',
-        //     select: '-password', // Exclude the password field
-        // });
 
         const matches = await About.aggregate([
             {

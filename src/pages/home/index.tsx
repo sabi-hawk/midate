@@ -11,8 +11,8 @@ import { useAppState } from "hooks";
 import { getUserMatches } from "api/user";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment";
 import { calculateAge } from "utils";
+import { createNotification } from "api/notification";
 
 function Home() {
   const {
@@ -154,7 +154,26 @@ function Home() {
     getPerfectMatches();
   }, []);
 
-  
+  const handleNo = (_id: string) => {
+    setMatches((prevMatches) =>
+      prevMatches.filter((match: any) => match.user._id !== _id)
+    );
+  };
+  const handleYes = async (_id: string) => {
+    try {
+      const { data } = await createNotification({ receiverId: _id });
+      toast.success("Match Request Sent Successfully!", {
+        autoClose: 3000,
+      });
+      setMatches((prevMatches) =>
+        prevMatches.filter((match: any) => match.user._id !== _id)
+      );
+    } catch (err: any) {
+      toast.error(err?.request?.data?.msg || "Error Sending Match Request", {
+        autoClose: 3000,
+      });
+    }
+  };
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       {!activeProfile ? (
@@ -220,11 +239,11 @@ function Home() {
                           <p className="gender-p">{match.preferredGender}</p>
                         </div>
                         <div className="btn-wrapper">
-                          <Button>
+                          <Button onClick={() => handleNo(match.user._id)}>
                             <i className="close-fill"></i>
                             No
                           </Button>
-                          <Button>
+                          <Button onClick={() => handleYes(match.user._id)}>
                             <i className="heart-fill"></i>YES
                           </Button>
                         </div>
@@ -239,7 +258,7 @@ function Home() {
           </Row>
         </>
       ) : (
-        <Profile match={activeProfile} setActiveProfile={setActiveProfile}/>
+        <Profile match={activeProfile} setActiveProfile={setActiveProfile} />
       )}
     </Row>
   );

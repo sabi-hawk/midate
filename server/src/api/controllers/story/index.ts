@@ -85,11 +85,9 @@ export const getLatestStories = httpMethod(async (req: Request, res: Response) =
         // Find about data for the userIds
         const aboutData = await About.find({ userId: { $in: userIds } });
 
-        console.log("ABOUT", aboutData)
         // Create a map of userId to about data
         const aboutDataMap = new Map();
         aboutData.forEach((about) => {
-            console.log("Setting :", about.userId)
             // @ts-ignore
             aboutDataMap.set(about.userId.toString(), about);
         });
@@ -99,7 +97,6 @@ export const getLatestStories = httpMethod(async (req: Request, res: Response) =
             // @ts-ignore
             const userId = story.userId._id.toString();
             // @ts-ignore
-            console.log("Getting :", userId, aboutDataMap.get(userId))
             return {
                 // @ts-ignore
                 ...story._doc,

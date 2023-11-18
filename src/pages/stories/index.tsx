@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "antd";
+import { Button, Col, Empty, Form, Row } from "antd";
 import type { SelectProps } from "antd";
 import SideBarFiends from "components/OnlineFriends";
 import Story from "components/Story";
@@ -95,9 +95,14 @@ function Stories() {
               <div className="title-feed">Latest Feed</div>
             </Row>
             <Row gutter={[16, 18]} className="wrapper-stories">
-              {stories.map((story) => (
-                <Story story={story} />
-              ))}
+              {stories.length > 0 ? (
+                stories.map((story) => <Story story={story} />)
+              ) : (
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description="No stories found"
+                />
+              )}
             </Row>
           </Row>
         </Col>

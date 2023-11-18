@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, Col, Form, Input, Row } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.scss";
+import { getUserConversations } from "api/conversation";
+import { useAppState } from "hooks";
+import { getTimePassed } from "utils";
 
 function Messages() {
+  const {
+    auth: { user },
+  } = useAppState();
+  const [conversations, setConversations] = useState([]);
+  const [leftSideBarUsers, setLeftSideBarUsers] = useState([]);
   const users = [
     {
       _id: "123",
@@ -49,6 +59,53 @@ function Messages() {
     },
   ];
 
+  const getConversations = async () => {
+    try {
+      const { data } = await getUserConversations(user._id);
+      console.log("Conversations", data.conversations);
+      setConversations(data?.conversations || []);
+    } catch (err: any) {
+      toast.error(err?.request?.data?.msg || "Error Fetching Conversation!", {
+        autoClose: 3000,
+      });
+    }
+  };
+  useEffect(() => {
+    getConversations();
+  }, []);
+
+  useEffect(() => {
+    if (conversations.length > 0) {
+      const otherMembers =
+        conversations.map((conversation: any) => {
+          const otherMember = conversation.members.find(
+            (member: any) => member._id !== user._id
+          );
+
+          return otherMember;
+        }) || [];
+
+      console.log("LEFT SIDE BAR", otherMembers);
+      // @ts-ignore
+      setLeftSideBarUsers(otherMembers);
+    }
+  }, [conversations]);
+
+  const getCreatedAt = (userId: any) => {
+    const relevantConversation = conversations.find((conversation: any) => {
+      // Check if the members array includes the specified userId
+      return conversation.members.some((member: any) => member._id === userId);
+    });
+
+    if (relevantConversation) {
+      // You can now access the createdAt property of the relevant conversation
+      // @ts-ignore
+      return relevantConversation.createdAt;
+    } else {
+      // Handle the case when no relevant conversation is found
+      return null;
+    }
+  };
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       <Row>
@@ -74,15 +131,19 @@ function Messages() {
           </div>
 
           <div className="user-cards-wrapper scroll-hide">
-            {users.map((user) => (
+            {leftSideBarUsers.map((user: any) => (
               <>
                 <div className="user-card">
                   <div className="details">
-                    <Avatar src={<img src={user.url} alt="avatar" />} />
+                    <Avatar
+                      src={<img src={user?.about?.profilePic} alt="avatar" />}
+                    />
                     <div className="content">
-                      <h3>{user.name}</h3>
-                      <p className="p-tag-message">{user.lastMessage}</p>
-                      <p className="p-tag-time">{user.time}</p>
+                      <h3>{`${user.name.first} ${user.name.last}`}</h3>
+                      {/* <p className="p-tag-message">{user.lastMessage}</p> */}
+                      <p className="p-tag-time">{`matched ${getTimePassed(
+                        getCreatedAt(user?._id)
+                      )}`}</p>
                     </div>
                   </div>
                   <Button>
