@@ -42,7 +42,7 @@ function Profile({ match, setActiveProfile }: any) {
   }, []);
   return (
     <Row>
-      <Col className="col-1-home user-profile" span={17}>
+      <Col className="col-1-home user-profile" span={24}>
         <Row gutter={[16, 18]} className="user-header">
           <div className="details-wrap">
             <Button
