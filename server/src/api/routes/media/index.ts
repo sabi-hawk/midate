@@ -94,4 +94,8 @@ mediaRouter.post("/upload/profile", uploadFileMiddleware, mediaController.upload
 
 mediaRouter.post("/upload/photos", uploadFileMiddleware, mediaController.upload);
 
+mediaRouter.post("/upload/add", uploadFileMiddleware, mediaController.uploadAdvertisement);
+
+mediaRouter.get("/add", mediaController.getAdvertisements);
+
 export default mediaRouter;

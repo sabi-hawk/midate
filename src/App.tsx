@@ -3,7 +3,6 @@ import Navbar from "./components/LeftNavbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Row, Col } from "antd";
 import { ToastContainer } from "react-toastify";
-import adsImage from "assets/ads.png";
 import "react-toastify/dist/ReactToastify.css";
 import "scss/index.scss";
 import Home from "pages/home";
@@ -16,6 +15,7 @@ import Notifications from "pages/notifications";
 import Messages from "pages/messages";
 import Settings from "pages/settings";
 import Profile from "pages/profile";
+import RightSideBar from "components/RightSideBar";
 
 const App = () => {
   const {
@@ -29,7 +29,7 @@ const App = () => {
           <Col className="col-navbar" span={4}>
             <Navbar />
           </Col>
-          <Col className="middle-col" span={16}>
+          <Col className="middle-col" span={14}>
             <Routes>
               <Route
                 path="/"
@@ -74,8 +74,8 @@ const App = () => {
               />
             </Routes>
           </Col>
-          <Col className="ads-col" span={4}>
-            <img src={adsImage} alt="" />
+          <Col className="ads-col" span={6}>
+            <RightSideBar />
           </Col>
         </Row>
         <ToastContainer position="top-center" />

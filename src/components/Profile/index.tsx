@@ -98,7 +98,7 @@ function Profile({ match, setActiveProfile }: any) {
         </Row>
       </Col>
 
-      <SideBarFiends />
+      {/* <SideBarFiends /> */}
     </Row>
   );
 }

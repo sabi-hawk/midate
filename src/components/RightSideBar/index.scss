@@ -1,0 +1,76 @@
+.right-side-bar-container {
+    // background-image: url("../../assets/ads.png");
+    height: 100%;
+    width: 100%;
+    // background-repeat: no-repeat;
+    .right-side-bar-inner{
+        padding-left: 20px;
+    }
+    .header {
+        background-color: #f1f1f1;
+        padding: 15px;
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+        // box-shadow: 0px 0px 2px 2px #b6b6b6;
+    }
+
+    .ant-btn {
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        background-color: #25c78b;
+        color: white;
+        padding: 4px 20px;
+    }
+    .adds-body{
+        height: 100%;
+        .adds-body-inner {
+            overflow: auto;
+            height: calc(100vh - 130px);
+            // Hide scrollbar for Firefox
+            scrollbar-width: thin;
+            scrollbar-color: #25c78b #25c78b;
+            
+            // Hide scrollbar for Chrome, Safari, and Opera
+            &::-webkit-scrollbar {
+                width: 0.4em;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background-color: #25c78b;
+            }
+        }
+    }
+}
+
+.title-add{
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.custom-add{
+    cursor: pointer;
+}
+
+.upload-add-main{
+    margin-bottom: 15px;
+
+    label{
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+    }
+}
+
+.add-preview-container{
+    img{
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 14px;
+        object-position: center;
+        margin-bottom: 10px;
+    }
+}

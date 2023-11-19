@@ -190,7 +190,7 @@ function Home() {
             <div className="title-home">Discover People</div>
           </Row>
           <Row>
-            <Col className="col-1-home" span={17}>
+            <Col className="col-1-home" span={24}>
               {/* <Row>
                 <Form form={form} onFinish={onFinish}>
                   <Form.Item name="searchString">
@@ -220,46 +220,54 @@ function Home() {
                   </Button>
                 </Form>
               </Row> */}
-              <Row className="row-user-cards " gutter={[16, 16]}>
+              <Row className="row-user-cards" gutter={[16, 16]}>
                 {matches.length > 0 ? (
-                  matches.map((match: any, index) => (
-                    <Col span={12} key={index}>
-                      <div className="user-card">
-                        <Button
-                          className="image-wrapper"
-                          onClick={() => setActiveProfile(match)}
-                        >
-                          <img src={match.profilePic || "http://localhost:8000/images/user-profile.png"} alt="" />
-                        </Button>
-                        <div className="details-wrapper">
+                    matches.map((match: any, index) => (
+                      <Col span={12} key={index}>
+                        <div className="user-card">
                           <Button
-                            className="name-btn"
+                            className="image-wrapper"
                             onClick={() => setActiveProfile(match)}
                           >
-                            <h3>{`${match.user.name.first} ${match.user.name.last}`}</h3>
+                            <img
+                              src={
+                                match.profilePic ||
+                                "http://localhost:8000/images/user-profile.png"
+                              }
+                              alt=""
+                            />
                           </Button>
-                          <div className="age-wrapper">
-                            <p>{calculateAge(match.user.dob)}</p>
-                            <i className="female-age-icon"></i>
-                          </div>
-                          <p className="city-p">{match.city}</p>
-                          <div className="gender-preference-wrap">
-                            <p className="text-looking">LookingFor </p>
-                            <p className="gender-p">{match.preferredGender}</p>
-                          </div>
-                          <div className="btn-wrapper">
-                            <Button onClick={() => handleNo(match.user._id)}>
-                              <i className="close-fill"></i>
-                              No
+                          <div className="details-wrapper">
+                            <Button
+                              className="name-btn"
+                              onClick={() => setActiveProfile(match)}
+                            >
+                              <h3>{`${match.user.name.first} ${match.user.name.last}`}</h3>
                             </Button>
-                            <Button onClick={() => handleYes(match.user._id)}>
-                              <i className="heart-fill"></i>YES
-                            </Button>
+                            <div className="age-wrapper">
+                              <p>{calculateAge(match.user.dob)}</p>
+                              <i className="female-age-icon"></i>
+                            </div>
+                            <p className="city-p">{match.city}</p>
+                            <div className="gender-preference-wrap">
+                              <p className="text-looking">LookingFor </p>
+                              <p className="gender-p">
+                                {match.preferredGender}
+                              </p>
+                            </div>
+                            <div className="btn-wrapper">
+                              <Button onClick={() => handleNo(match.user._id)}>
+                                <i className="close-fill"></i>
+                                No
+                              </Button>
+                              <Button onClick={() => handleYes(match.user._id)}>
+                                <i className="heart-fill"></i>YES
+                              </Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Col>
-                  ))
+                      </Col>
+                    ))
                 ) : (
                   <div className="no-user-card-main">
                     <Empty
@@ -271,7 +279,7 @@ function Home() {
               </Row>
             </Col>
 
-            <SideBarFriends />
+            {/* <SideBarFriends /> */}
           </Row>
         </>
       ) : (

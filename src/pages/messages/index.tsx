@@ -132,57 +132,61 @@ function Messages() {
       </Row>
       <Row>
         <Col className="col-1-messages left-sidebar" span={8}>
-          <div className="left-header">
-            <div className="header">
-              <h3> All Messages</h3>
+          <div className="left-sidebar-inner">
+            <div className="left-header">
+              <div className="header">
+                <h3> All Messages</h3>
 
-              <Button>
-                <i className="icon-dots"></i>
-              </Button>
+                <Button>
+                  <i className="icon-dots"></i>
+                </Button>
+              </div>
+
+              <div className="search-wrap">
+                <Input
+                  addonBefore={<SearchOutlined />}
+                  placeholder="Search or start a new chat"
+                />
+              </div>
             </div>
 
-            <div className="search-wrap">
-              <Input
-                addonBefore={<SearchOutlined />}
-                placeholder="Search or start a new chat"
-              />
-            </div>
-          </div>
-
-          <div className="user-cards-wrapper scroll-hide">
-            {leftSideBarUsers.map((user: any) => (
-              <>
-                <div
-                  className="user-card"
-                  onClick={() => handleActiveChat(user)}
-                >
-                  <div className="details">
-                    <Avatar
-                      src={<img src={user?.about?.profilePic} alt="avatar" />}
-                    />
-                    <div className="content">
-                      <h3>{`${user.name.first} ${user.name.last}`}</h3>
-                      {/* <p className="p-tag-message">{user.lastMessage}</p> */}
-                      <p className="p-tag-time">{`matched ${getTimePassed(
-                        getCreatedAt(user?._id)
-                      )}`}</p>
+            <div className="user-cards-wrapper scroll-hide">
+              {leftSideBarUsers.map((user: any) => (
+                <>
+                  <div
+                    className="user-card"
+                    onClick={() => handleActiveChat(user)}
+                  >
+                    <div className="details">
+                      <Avatar
+                        src={<img src={user?.about?.profilePic} alt="avatar" />}
+                      />
+                      <div className="content">
+                        <h3>{`${user.name.first} ${user.name.last}`}</h3>
+                        {/* <p className="p-tag-message">{user.lastMessage}</p> */}
+                        <p className="p-tag-time">{`matched ${getTimePassed(
+                          getCreatedAt(user?._id)
+                        )}`}</p>
+                      </div>
                     </div>
+                    <Button>
+                      <i className="icon-favorite"></i>
+                    </Button>
                   </div>
-                  <Button>
-                    <i className="icon-favorite"></i>
-                  </Button>
-                </div>
-                <div className="horizontal-line"></div>
-              </>
-            ))}
+                  <div className="horizontal-line"></div>
+                </>
+              ))}
+            </div>
           </div>
         </Col>
         <Col className="col-2-messages right-sidebar" span={16}>
-        <ChatBox
-            chat={activeChat}
-            setSendMessage={setSendMessage}
-            receiveMessage={receiveMessage}
-          />
+          <div className="col-2-messages-inner">
+            <ChatBox
+                chat={activeChat}
+                setSendMessage={setSendMessage}
+                receiveMessage={receiveMessage}
+              />
+          </div>
         </Col>
       </Row>
     </Row>

@@ -91,7 +91,7 @@ function Notifications() {
         <div className="title-home">Notifications</div>
       </Row>
       <Row>
-        <Col className="col-1-notifications notifications" span={17}>
+        <Col className="col-1-notifications notifications" span={24}>
           <Row className="wrapper-notifications">
             {notifications2.length > 0 ? (
               notifications2.map((notification: any) => (
@@ -132,7 +132,7 @@ function Notifications() {
           </Row>
         </Col>
 
-        <SideBarFiends />
+        {/* <SideBarFiends /> */}
       </Row>
     </Row>
   );

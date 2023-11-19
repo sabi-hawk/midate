@@ -72,7 +72,7 @@ function Stories() {
         <div className="title-home">Stories</div>
       </Row>
       <Row>
-        <Col className="col-1-stories stories" span={17}>
+        <Col className="col-1-stories stories" span={24}>
           <Row gutter={[16, 16]} className="row-wrapper-stories">
             <Row>
               <Form form={form} onFinish={onFinish} className="story-form-main">
@@ -107,7 +107,7 @@ function Stories() {
           </Row>
         </Col>
 
-        <SideBarFiends />
+        {/* <SideBarFiends /> */}
       </Row>
     </Row>
   );

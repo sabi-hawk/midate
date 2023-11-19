@@ -4,6 +4,7 @@ import * as fs from "fs";
 import { httpMethod } from "..";
 import { authenticateRequest } from "../../middleware/auth";
 import About from "../../../models/About";
+import Add from "../../../models/Add";
 
 
 export const upload = httpMethod(async (req: Request, res: Response) => {
@@ -66,4 +67,61 @@ export const uploadProfilePic = httpMethod(async (req: Request, res: Response) =
         name: fileName,
         about
     });
+})
+
+
+export const uploadAdvertisement = httpMethod(async (req: Request, res: Response) => {
+    const data = await authenticateRequest(req, res);
+    if (!req.files || req.files.length === 0) {
+        throw {
+            status: 400,
+            message: "Upload at least one file, please!",
+        };
+    }
+    // @ts-ignore
+    const file = req.files[0]
+    const fileName = `${data.userId}-add-${Date.now()}${file.originalname}`;
+    fs.renameSync(file.path, path.join(path.resolve(__dirname, "../../../../uploads/"), fileName));
+
+    const add = await new Add({
+        userId: data.userId,
+        banner: `${process.env.BASE_URL}/images/${fileName}` || '',
+        attachedUrl: req.body.attachedUrl
+    }).save();
+
+    res.status(200).json({
+        message: "Add created successfully!",
+        add
+    });
+})
+
+
+
+export const getAdvertisements = httpMethod(async (req: Request, res: Response) => {
+    await authenticateRequest(req, res);
+    const { page, pageSize } = req.params;
+    const pageNumber = parseInt(page as string);
+    const size = parseInt(pageSize as string);
+    if (pageNumber < 1 || size < 1) {
+        throw {
+            status: 400,
+            message: "Invalid page or page size"
+        }
+    }
+
+    const skip = (pageNumber - 1) * size;
+    const totalAdds = await Add.countDocuments({});
+
+    const adds = await Add.find({})
+        .sort({ createdAt: -1 }) // Sort by createdAt in descending order (latest first)
+        .skip(skip)
+        .limit(size)
+
+    res.status(200).json({
+        message: "Fetched Latest Adds",
+        adds: adds,
+        total: totalAdds,
+        currentPage: pageNumber,
+    });
+
 })

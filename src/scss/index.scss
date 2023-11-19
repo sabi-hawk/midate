@@ -9,8 +9,8 @@
   padding: 14px;
 }
 .col-navbar {
-  flex: 0 0 15% !important;
-  max-width: 15% !important;
+  // flex: 0 0 15% !important;
+  // max-width: 15% !important;
   box-shadow: 0px 0px 16px rgb(0 0 0 / 19%);
 }
 
@@ -19,8 +19,8 @@
   box-shadow: 5px 0px 10px 0px rgba(0, 0, 0, 0.1019607843) inset;
   padding: 10px 0px; /* Add padding to the parent column */
   position: relative; /* Make the position relative for child positioning */
-  flex: 0 0 15% !important;
-  max-width: 15% !important;
+  // flex: 0 0 15% !important;
+  // max-width: 15% !important;
   /* Center the child div vertically and horizontally */
   display: flex;
   flex-direction: column;
@@ -28,8 +28,12 @@
   align-items: center;
 
   img {
-    height: 100%;
-    // width: 100%;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    margin-top: 10px;
   }
 }
 
@@ -46,6 +50,6 @@
 
 .middle-col {
   background-color: #f1f1f1;
-  flex: 0 0 70% !important;
-  max-width: 70% !important;
+  // flex: 0 0 70% !important;
+  // max-width: 70% !important;
 }
