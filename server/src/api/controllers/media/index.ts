@@ -86,7 +86,9 @@ export const uploadAdvertisement = httpMethod(async (req: Request, res: Response
     const add = await new Add({
         userId: data.userId,
         banner: `${process.env.BASE_URL}/images/${fileName}` || '',
-        attachedUrl: req.body.attachedUrl
+        attachedUrl: req.body.attachedUrl,
+        title: req.body.title,
+        description: req.body.description
     }).save();
 
     res.status(200).json({

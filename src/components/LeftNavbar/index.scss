@@ -75,10 +75,34 @@
   img {
     height: 100px;
     width: 100px;
-    border-radius: 50%;
+    border-radius: 20%;
     object-fit: cover;
   }
   p {
     font-weight: 500;
   }
+}
+
+.count-icon{
+  background-color: green;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  display: none;
+}
+
+.messages-count-icon{
+  background-color: green;
+  width: 15px;
+  height: 15px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  display: none;
 }

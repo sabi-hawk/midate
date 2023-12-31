@@ -12,3 +12,17 @@ export const getLatestFeed = (page: any, pageSize: any) =>
       pageSize: pageSize,
     },
   });
+
+export const postComment = (
+  storyId: any,
+  content: any,
+  userId: any,
+  userName: any,
+  userProfilePic: any
+) =>
+  API.post(`/story/${storyId}/comment`, {
+    content: content,
+    userId: userId,
+    userName: userName,
+    userProfilePic: userProfilePic,
+  });

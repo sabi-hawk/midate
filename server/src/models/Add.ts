@@ -9,6 +9,14 @@ const AddSchema = new Schema({
     banner: {
         type: String,
     },
+    title: {
+        type: String,
+        default: ''
+    },
+    description: {
+        type: String,
+        default: ''
+    },
     attachedUrl: {
         type: String,
         default: ''

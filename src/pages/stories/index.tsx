@@ -14,36 +14,7 @@ function Stories() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const [data, setData] = useState<SelectProps["options"]>([]);
-  const [value, setValue] = useState<string>();
-
   const [form] = Form.useForm();
-  // const stories = [
-  //   {
-  //     content:
-  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-  //     likes: 230,
-  //     comments: 50,
-  //   },
-  //   {
-  //     content:
-  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-  //     likes: 230,
-  //     comments: 50,
-  //   },
-  //   {
-  //     content:
-  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-  //     likes: 230,
-  //     comments: 50,
-  //   },
-  //   {
-  //     content:
-  //       "In today’s fast-paced world, love is often viewed as a means of self-discovery and personal growth. he discovery of shared passions, interests, and personal goals, allowing individuals to forge connections that promote personal growth and mutual development.",
-  //     likes: 230,
-  //     comments: 50,
-  //   },
-  // ];
 
   const onFinish = async (values: any) => {
     const { data } = await createStory(values.storyContent);
@@ -106,8 +77,6 @@ function Stories() {
             </Row>
           </Row>
         </Col>
-
-        {/* <SideBarFiends /> */}
       </Row>
     </Row>
   );

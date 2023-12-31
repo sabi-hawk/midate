@@ -200,10 +200,16 @@ function Profile() {
                   <h3>Change Profile Picture</h3>
                   <div className="wrap-btn">
                     <input
+                      id="image-upload"
+                      name="image-upload"
                       type="file"
                       accept="image/*"
                       onChange={handleFileChange}
                     />
+                    {/* @ts-ignore */}
+                    <label for="image_upload">
+                      <Button>Choose File</Button>
+                    </label>
                     {/* <Button>Choose</Button> */}
                     <Button onClick={handleUpload}>Upload</Button>
                   </div>
@@ -386,12 +392,18 @@ function Profile() {
           <Row className="row-photos">
             <div className="row-header">
               <h3>Photos</h3>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFilesChange}
-                multiple
-              />
+              <div className="wrap-btn">
+                <label>
+                  <Button>Choose Files</Button>
+                </label>
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFilesChange}
+                  multiple
+                />
+              </div>
               {/* <Button>Add More</Button> */}
             </div>
             <div className="wrapper-photos">

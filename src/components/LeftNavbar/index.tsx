@@ -58,6 +58,7 @@ function LeftNavbar() {
         <NavLink className="home-menu-item" to="messages">
           <i className="menu-icon icon-messages" />
           Messages
+          <div className="count-icon">1</div>
         </NavLink>
       ),
       key: "Messages",
@@ -67,6 +68,7 @@ function LeftNavbar() {
         <NavLink className="home-menu-item" to="notifications">
           <i className="menu-icon icon-notifications" />
           Notifications
+          <div className="messages-count-icon"></div>
         </NavLink>
       ),
       key: "Notifications",

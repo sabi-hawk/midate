@@ -116,6 +116,44 @@ export const getLatestStories = httpMethod(async (req: Request, res: Response) =
     }
 });
 
+
+export const postComment = httpMethod(async (req: Request, res: Response) => {
+    try {
+      // Authenticate the request (assuming you have a separate function for this)
+      const data = await authenticateRequest(req, res);
+  
+      // Extract the storyId from the route parameter
+      const storyId = req.params.storyId;
+  
+      // Find the relevant story
+      const story = await Story.findById(storyId);
+  
+      if (!story) {
+        return res.status(404).json({ message: "Story not found" });
+      }
+  
+      // Create the new comment object from the request body
+      const comment = {
+        userId: req.body.userId,
+        userName: req.body.userName, // Assuming you have userName in authenticated data
+        userProfilePic: req.body.userProfilePic, // Similarly for userProfilePic
+        content: req.body.content,
+        createdAt: new Date(),
+      };
+  
+      // Push the new comment to the story's comments array
+      story.comments.push(comment);
+  
+      // Save the updated story
+      await story.save();
+  
+      res.status(200).json({ message: "Comment added successfully", comment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
 export const updateStory = httpMethod(async (req: Request, res: Response) => {
 
 })

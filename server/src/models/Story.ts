@@ -44,8 +44,21 @@ const StorySchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'user'
             },
+            userName: {
+                type: String,
+                default: ''
+            },
+            userProfilePic: {
+                type: String,
+                default:''
+            },
             content: {
                 type: String,
+                default: ''
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
             },
         }
     ],
