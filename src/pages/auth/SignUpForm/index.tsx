@@ -88,51 +88,9 @@ function Signup() {
               </Form.Item>
             </div>
             <div>
-              <label className="bold">Password</label>
-              <Form.Item
-                name="password"
-                rules={[
-                  { required: true, message: "Please enter your password" },
-                  {
-                    min: 3,
-                    message: "Password must be at least 6 characters",
-                  },
-                ]}
-              >
-                <Input
-                  type="password"
-                  className="bg-transparent form-control py-2"
-                  placeholder="Enter Password"
-                />
-              </Form.Item>
-            </div>
-          </Col>
-          <Col className="inner-second-col" span={12}>
-            <div>
-              <label className="bold">Last Name</label>
-              <Form.Item
-                name={["name", "last"]}
-                rules={[
-                  { required: true, message: "Please enter your Last Name" },
-                ]}
-              >
-                <Input
-                  className="bg-transparent form-control py-2"
-                  placeholder="Last Name"
-                />
-              </Form.Item>
-            </div>
-
-            <div>
-              <label className="bold">Your Birthday</label>
-              <Form.Item name="dob">
-                <DatePicker className="bg-transparent form-control py-2" />
-              </Form.Item>
-            </div>
-
-            {/* <div>
               <label className="bold">Phone</label>
               <Form.Item
+                name="phone"
                 validateTrigger="onSubmit"
                 rules={[
                   {
@@ -141,30 +99,16 @@ function Signup() {
                   },
                   {
                     pattern:
-                      /^(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?)|[0-9]?)\s*[)]?[-\s.]?[(]?[0-9]{1,3}[)]?([-\s.]?[0-9]{3})([-\s.]?[0-9]{3,4})$/,
+                      /^(\+[0-9]{1,3}\s?)?(\([0-9]{3}\)|[0-9]{4})[-.\s]?[0-9]{1,3}[-.\s]?[0-9]{2,4}[-.\s]?[0-9]{2,4}$/,
                     message: "Phone number format is not valid",
                   },
                 ]}
               >
                 <MaskedInput
                   id="phone_num_input"
-                  mask="+{1} (000)-000-0000"
-                  placeholder="+1 (XXX)-XXX-XXXX"
+                  mask="+{256} (000)-00-00-00"
+                  placeholder="+256 (XXX)-XX-XX-XX"
                   autoFocus
-                />
-              </Form.Item>
-            </div> */}
-
-            <div>
-              <label className="bold">Looking For</label>
-              <Form.Item name="preferredGender" initialValue="Female">
-                <Select
-                  defaultValue="Female"
-                  options={[
-                    { value: "Male", label: "Male" },
-                    { value: "Female", label: "Female" },
-                    { value: "Custom", label: "Custom" },
-                  ]}
                 />
               </Form.Item>
             </div>
@@ -192,6 +136,62 @@ function Signup() {
                   type="password"
                   className="bg-transparent form-control py-2"
                   placeholder="Confirm Password"
+                />
+              </Form.Item>
+            </div>
+          </Col>
+          <Col className="inner-second-col" span={12}>
+            <div>
+              <label className="bold">Last Name</label>
+              <Form.Item
+                name={["name", "last"]}
+                rules={[
+                  { required: true, message: "Please enter your Last Name" },
+                ]}
+              >
+                <Input
+                  className="bg-transparent form-control py-2"
+                  placeholder="Last Name"
+                />
+              </Form.Item>
+            </div>
+
+            <div>
+              <label className="bold">Your Birthday</label>
+              <Form.Item name="dob">
+                <DatePicker className="bg-transparent form-control py-2" />
+              </Form.Item>
+            </div>
+
+            <div>
+              <label className="bold">Looking For</label>
+              <Form.Item name="preferredGender" initialValue="Female">
+                <Select
+                  defaultValue="Female"
+                  options={[
+                    { value: "Male", label: "Male" },
+                    { value: "Female", label: "Female" },
+                    { value: "Custom", label: "Custom" },
+                  ]}
+                />
+              </Form.Item>
+            </div>
+            <div>
+              <label className="bold">Password</label>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                  {
+                    min: 3,
+                    message: "Password must be at least 6 characters",
+                  },
+                ]}
+              >
+                <Input
+                  type="password"
+                  className="bg-transparent form-control py-2"
+                  placeholder="Enter Password"
                 />
               </Form.Item>
             </div>

@@ -15,5 +15,13 @@ export const updateUserDetails = (userDetails: any) =>
 export const getUserMatches = (
   preferredGender: string,
   city: string,
-  country: string
-) => API.get(`/user/matches/${preferredGender}/${city}/${country}`);
+  country: string,
+  page: any,
+  pageSize: any
+) =>
+  API.get(`/user/matches/${preferredGender}/${city}/${country}`, {
+    params: {
+      page: page,
+      pageSize: pageSize,
+    },
+  });

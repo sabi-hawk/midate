@@ -116,7 +116,7 @@ function LeftNavbar() {
       </div>
       <div className="bottom-container">
         <img
-          src={user.about?.profilePic}
+          src={user.about?.profilePic || 'http://localhost:8000/images/user_profile.png'}
           alt=""
         />
         <p>{`${user.name?.first} ${user.name?.last}`}</p>

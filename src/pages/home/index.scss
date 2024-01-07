@@ -455,6 +455,21 @@
   height: 100%;
 }
 
-.row-user-cards-main{
+.row-user-cards-main {
   height: 100%;
+}
+
+.btn-load-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  button {
+    display: flex;
+    border-radius: 6px;
+    background-color: #25c78b;
+    color: white;
+    padding: 4px 20px;
+  }
 }

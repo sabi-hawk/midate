@@ -29,45 +29,11 @@ function Home() {
   const [activeProfile, setActiveProfile] = useState<undefined | string>(
     undefined
   );
-  const [form] = Form.useForm();
-  const users = [
-    {
-      _id: "328765238745287346",
-      name: "Jessica J.",
-      age: 28,
-      city: "New York, USA",
-      lookingFor: "Male",
-      profilePic:
-        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-    },
-    {
-      _id: "328765238745287346",
-      name: "Kelly M.",
-      age: 28,
-      city: "New York, USA",
-      lookingFor: "Male",
-      profilePic:
-        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f9.png",
-    },
-    {
-      _id: "328765238745287346",
-      name: "Kelly M.",
-      age: 28,
-      city: "New York, USA",
-      lookingFor: "Male",
-      profilePic:
-        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f9.png",
-    },
-    {
-      _id: "328765238745287346",
-      name: "Jessica J.",
-      age: 28,
-      city: "New York, USA",
-      lookingFor: "Male",
-      profilePic:
-        "http://localhost:8000/images/profile_pic_6512b3430da1dea3c4ad09f8.png",
-    },
-  ];
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 10,
+  });
+
   const fetchSuggestions = async (value: string) => {
     try {
       if (!value) {
@@ -143,7 +109,9 @@ function Home() {
       const { status, data } = await getUserMatches(
         preferredGender,
         city,
-        country
+        country,
+        pagination.page,
+        pagination.pageSize
       );
       setMatches(data.matches || []);
       console.log("FOUND MATCHES", data);
@@ -155,7 +123,7 @@ function Home() {
   };
   useEffect(() => {
     getPerfectMatches();
-  }, []);
+  }, [pagination]);
 
   const handleNo = (_id: string) => {
     setMatches((prevMatches) =>
@@ -182,6 +150,13 @@ function Home() {
   useEffect(() => {
     socket.emit("new-user-add", user._id);
   });
+
+  const handleLoadMore = () => {
+    setPagination({
+      page: pagination.page + 1,
+      pageSize: pagination.pageSize,
+    });
+  };
   return (
     <Row className="wrapper-home-page" gutter={[16, 16]}>
       {!activeProfile ? (
@@ -222,52 +197,50 @@ function Home() {
               </Row> */}
               <Row className="row-user-cards" gutter={[16, 16]}>
                 {matches.length > 0 ? (
-                    matches.map((match: any, index) => (
-                      <Col span={12} key={index}>
-                        <div className="user-card">
+                  matches.map((match: any, index) => (
+                    <Col span={12} key={index}>
+                      <div className="user-card">
+                        <Button
+                          className="image-wrapper"
+                          onClick={() => setActiveProfile(match)}
+                        >
+                          <img
+                            src={
+                              match.profilePic ||
+                              "http://localhost:8000/images/user-profile.png"
+                            }
+                            alt=""
+                          />
+                        </Button>
+                        <div className="details-wrapper">
                           <Button
-                            className="image-wrapper"
+                            className="name-btn"
                             onClick={() => setActiveProfile(match)}
                           >
-                            <img
-                              src={
-                                match.profilePic ||
-                                "http://localhost:8000/images/user-profile.png"
-                              }
-                              alt=""
-                            />
+                            <h3>{`${match.user.name.first} ${match.user.name.last}`}</h3>
                           </Button>
-                          <div className="details-wrapper">
-                            <Button
-                              className="name-btn"
-                              onClick={() => setActiveProfile(match)}
-                            >
-                              <h3>{`${match.user.name.first} ${match.user.name.last}`}</h3>
+                          <div className="age-wrapper">
+                            <p>{calculateAge(match.user.dob)}</p>
+                            <i className="female-age-icon"></i>
+                          </div>
+                          <p className="city-p">{match.city}</p>
+                          <div className="gender-preference-wrap">
+                            <p className="text-looking">LookingFor </p>
+                            <p className="gender-p">{match.preferredGender}</p>
+                          </div>
+                          <div className="btn-wrapper">
+                            <Button onClick={() => handleNo(match.user._id)}>
+                              <i className="close-fill"></i>
+                              No
                             </Button>
-                            <div className="age-wrapper">
-                              <p>{calculateAge(match.user.dob)}</p>
-                              <i className="female-age-icon"></i>
-                            </div>
-                            <p className="city-p">{match.city}</p>
-                            <div className="gender-preference-wrap">
-                              <p className="text-looking">LookingFor </p>
-                              <p className="gender-p">
-                                {match.preferredGender}
-                              </p>
-                            </div>
-                            <div className="btn-wrapper">
-                              <Button onClick={() => handleNo(match.user._id)}>
-                                <i className="close-fill"></i>
-                                No
-                              </Button>
-                              <Button onClick={() => handleYes(match.user._id)}>
-                                <i className="heart-fill"></i>YES
-                              </Button>
-                            </div>
+                            <Button onClick={() => handleYes(match.user._id)}>
+                              <i className="heart-fill"></i>YES
+                            </Button>
                           </div>
                         </div>
-                      </Col>
-                    ))
+                      </div>
+                    </Col>
+                  ))
                 ) : (
                   <div className="no-user-card-main">
                     <Empty
@@ -277,6 +250,10 @@ function Home() {
                   </div>
                 )}
               </Row>
+              <div className="btn-load-wrap">
+
+              <Button onClick={handleLoadMore}>Load More</Button>
+              </div>
             </Col>
 
             {/* <SideBarFriends /> */}

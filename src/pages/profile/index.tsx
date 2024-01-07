@@ -191,7 +191,7 @@ function Profile() {
                     src={
                       selectedProfilePicture.url ||
                       user?.about?.profilePic ||
-                      "http://localhost:8000/images/user-profile.png"
+                      "http://localhost:8000/images/user_profile.png"
                     }
                     alt=""
                   />

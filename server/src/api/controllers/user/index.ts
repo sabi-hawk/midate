@@ -60,13 +60,17 @@ export const settings = httpMethod(async (req: Request, res: Response) => {
 export const getMatches = httpMethod(async (req: Request, res: Response) => {
     const data = await authenticateRequest(req, res);
     const { preferredGender, city, country } = req.params;
-
+    const { page = 1, pageSize = 10 } = req.query;
+    console.log("TESTING", page, pageSize)
     // Create a filter object to exclude "unknown" parameters
     const filter = {
         gender: preferredGender !== 'unknown' ? preferredGender : { $ne: 'unknown' },
         city: city !== 'unknown' ? city : { $ne: 'unknown' },
         country: country !== 'unknown' ? country : { $ne: 'unknown' },
     };
+    // Calculate the skip value based on the page and pageSize
+    // @ts-ignore
+    const skip = (page - 1) * pageSize;
 
     try {
 
@@ -94,6 +98,12 @@ export const getMatches = httpMethod(async (req: Request, res: Response) => {
                     'user.password': 0, // Exclude the password field
                     userId: 0
                 },
+            },
+            {
+                $skip: skip, // Skip records based on pagination
+            },
+            {
+                $limit: parseInt(pageSize.toString()), // Limit the number of records returned
             },
         ]);
 
